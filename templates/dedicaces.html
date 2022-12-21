@@ -1,0 +1,116 @@
+{% extends 'base.html' %} {% load static %} {% block 'body' %}
+
+<div class="row page-titles">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a href="#">D&eacute;dicaces</a></li>
+    </ol>
+</div>
+<a href="{% url 'dedicaces'  %}" class="btn btn-primary mb-1 mg-auto" data-bs-toggle="modal" data-bs-target="#sendMessageModal" style="width:40vw;margin:15px">
+    <span class="btn-icon-start text-primary"><i class="fa fa-plus color-primary"></i></span> nouvel d&eacute;dicace
+</a>
+<br>
+<!-- Modal -->
+<div class="modal fade" id="sendMessageModal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> Envoyer d&eacute;dicace</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form class="comment-form" action="{% url 'dedicace' %}" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label class="text-black font-w600 form-label"> Le nom de la personne <span
+                                                            class="required">*</span></label>
+                                <input type="text" class="form-control" name="destinataire" value="">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label class="text-black font-w600 form-label">Votre nom <span
+                                                            class="required">*</span></label>
+                                <input type="text" class="form-control" placeholder="Entrer votre nom" name="destinateur" {% if request.user.is_authenticated %} value={{request.user.username}}{% endif%} >
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="mb-3">
+                                <label class="text-black font-w600 form-label">La d&eacute;dicace</label>
+                                <textarea rows="8" class="form-control" name="msj" placeholder="message"></textarea>
+                            </div>
+                        </div>
+                        <input type="hidden" name="id" value="97">
+                        <div class="col-lg-12">
+                            <div class="mb-3 mb-0">
+                                <input type="submit" class="submit btn btn-primary" name="submit">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{%for x in dedicaces %}
+<div class="profile-uoloaded-post border-bottom-1 pb-5">
+    <img src="{% static 'images/profiles/8.jpg' %}" alt="" class="img-fluid w-100 rounded">
+    <a class="post-title">
+         {% if x.replique_a %}
+        <small class='badge badge-secondary'><i class="fa fa-reply"></i>  r&eacute;plique a la d&eacute;dicaces de {{x.replique_a.emetteur}} </small> {% endif %}
+        <h3 class="text-black">D&eacute;dicaces de {{x.emetteur}} a {{x.recepteur}}</h3>
+        {% if x.get_nombre_likes == 0 %}{% else %}
+        <code>{{x.get_nombre_likes}} likes</code>
+        {% endif %}
+    </a>
+    <p>{{x.message}}</p>
+    <a href="{{x.get_like_url}}"><button class="btn  {% for y in user.dedicaces.all  %}{% if x.id == y.id  %}btn-success{%endif%}{% empty %}primary{% endfor %} me-2 style="border:1px gray dotted ;"><span class="me-2"><i class="fa fa-heart"></i></span>like{% for y in user.dedicaces.all  %}{% if x.id == y.id  %}d{%endif%}{% endfor %}</button></a>
+    <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#replyModal{{forloop.counter}}"><span class="me-2"><i class="fa fa-reply"></i></span>Reply</button>
+</div>
+
+<div class="modal fade" id="replyModal{{forloop.counter}}">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> Envoyer une r&eacute;ponse</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form class="comment-form" action="{% url 'dedicace' %}" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label class="text-black font-w600 form-label">Le nom de la personne <span
+                                                            class="required">*</span></label>
+                                <input type="text" class="form-control" name="destinataire" value="{{x.emetteur}}">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label class="text-black font-w600 form-label">Votre nom <span
+                                                            class="required">*</span></label>
+                                <input type="text" class="form-control" placeholder="Entrer votre nom" name="destinateur">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="mb-3">
+                                <label class="text-black font-w600 form-label">La d&eacute;dicace</label>
+                                <textarea rows="8" class="form-control" name="msj" placeholder="message"></textarea>
+                            </div>
+                        </div>
+                        <input type="hidden" name="id" value="97">
+                        <input type="hidden" name="replique" value="{{x.id}}">
+                        <div class="col-lg-12">
+                            <div class="mb-3 mb-0">
+                                <input type="submit" class="submit btn btn-primary" name="submit">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{%endfor %} {% endblock %}

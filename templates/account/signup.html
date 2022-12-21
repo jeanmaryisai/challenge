@@ -1,0 +1,117 @@
+{% load static %}
+
+{% load account socialaccount %}
+{% load i18n %}
+
+
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="keywords" content="admin, dashboard">
+  <meta name="author" content="DexignZone">
+  <meta name="robots" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Dompet : Payment Admin Template">
+  <meta property="og:title" content="Dompet : Payment Admin Template">
+  <meta property="og:description" content="Dompet : Payment Admin Template">
+  <meta property="og:image" content="https://dompet.dexignlab.com/xhtml/social-image.png">
+  <meta name="format-detection" content="telephone=no">
+  
+  <!-- PAGE TITLE HERE -->
+  <title>Registered</title>
+  
+  <!-- FAVICONS ICON -->
+  <link rel="shortcut icon" type="image/png" href="images/favicon.png">
+    <link href="{% static 'css/style.css'%}" rel="stylesheet">
+
+</head>
+
+<body class="vh-100">
+    <div class="authincation h-100">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100 align-items-center">
+                <div class="col-md-6">
+                    <div class="authincation-content">
+                        <div class="row no-gutters">
+                            <div class="col-xl-12">
+                                <div class="auth-form">
+                  <div class="text-center mb-3">
+                    <a href="index.html"><h1 class="logo-abbr" width="53" height="53" viewbox="0 0 53 53">@</h1>
+                <h2 class="brand-title" width="124px" height="33px">AJEDPV</h2></a>
+                  </div>
+                                    <h4 class="text-center mb-4">Sign up your account</h4>
+
+                                    <form action="{% url 'account_signup' %}" method='POST'>
+                                      {% csrf_token %}
+                                      {% if form.errors %}
+{% for field in form %}
+    {% for error in field.errors %}
+        <div class="alert alert-error">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endfor %}
+{% for error in form.non_field_errors %}
+    <div class="alert alert-error">
+        <strong>{{ error|escape }}</strong>
+    </div>
+{% endfor %}
+{% endif %}
+                                        <div class="mb-3">
+                                            <label class="mb-1"><strong>Username</strong></label>              
+                                            <input type="text" name="username"  class='form-control' placeholder="Username" autocomplete="Username" maxlength="150" required
+                                                  id="id_username">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="mb-1"><strong>Email</strong></label>
+                                            <input type="email" name="email" placeholder="E-mail" class='form-control' autocomplete="email" id="id_email">
+            
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="mb-1"><strong>Mot de passe</strong></label>
+                                            <input type="password" name="password2" placeholder="Password" autocomplete="new-password" maxlength="150" class="form-control" 
+                                            required id="id_password2">
+                                        </div>
+                                        <div class="mb-3">
+                                          <label class="mb-1"><strong>Retaper le mot de passe</strong></label>
+
+                                                      <input type="password" name="password1" placeholder="Password" autocomplete="new-password" maxlength="150" class='form-control'
+                required id="id_password1">
+                                        </div>
+                                                    {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+                                        <div class="text-center mt-4">
+                                            <button type="submit" class="btn btn-primary btn-block">Sign me up</button>
+                                        </div>
+                                    </form>
+                                    <div class="new-account mt-3">
+                                        <p>Deja enregistrer ? <a class="text-primary" href="{{ login_url }}">Connectez vous</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--**********************************
+  Scripts
+***********************************-->
+<!-- Required vendors -->
+<script src="{% static 'vendor/global/global.min.js' %}"></script>
+<script src="{% static 'js/custom.min.js' %}"></script>
+<script src="{% static 'js/dlabnav-init.js' %}"></script>
+<script src="{% static 'js/styleSwitcher.js' %}"></script>
+</body>
+</html>
+
+
+
+
+

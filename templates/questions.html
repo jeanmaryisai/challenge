@@ -1,0 +1,39 @@
+{% extends 'base.html' %} {% load static %} {% block 'body' %}
+
+<div class="col-xxl-12">
+    <div class="card transparent-card">
+        <div class="card-header d-block">
+            <h4 class="card-title">List des question</h4>
+            <p class="m-0 subtitle">Voici la liste des questions deja pos&eacute;e dans le programme.</p>
+        </div>
+        <div class="card-body">
+
+            <div class="accordion accordion-header-shadow accordion-rounded" id="accordion-ten">
+
+                {% for x in qst %}
+                <div class="accordion-item">
+                    <div class="accordion-header  rounded-lg" id="accord-{{forloop.counter}}0One" data-bs-toggle="collapse" data-bs-target="#collapse{{forloop.counter}}0One" aria-controls="collapse{{forloop.counter}}0One" aria-expanded="true" role="button">
+                        <span class="accordion-header-icon"></span>
+                        <span class="accordion-header-text">Question #{{x.number}} <span
+                                class="badge badge-{% if x.repondu == True %}success{%else%}danger{%endif%} badge-sm">{% if x.repondu == True %}R&eacute;pondu{%else%}rat&eacute;e{%endif%} par {{x.receveur.prenom}}</span></span>
+                        <span class="accordion-header-indicator"></span>
+                    </div>
+                    <div id="collapse{{forloop.counter}}0One" class="collapse accordion__body {% if forloop.counter == 1 %}show{% endif %}" aria-labelledby="accord-{{forloop.counter}}0One" data-bs-parent="#accordion-ten">
+                        <div class="accordion-body-text">
+                            {{x.enoncee}}
+                            <br><br>
+                            <strong>
+                                R&eacute;ponse: {{x.reponse}}
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <h3>Pas de questions pour l'instant revenez plus tard. ;)</h3>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endblock%}

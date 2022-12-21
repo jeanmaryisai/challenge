@@ -1,0 +1,54 @@
+{% extends 'base.html' %} {% load static %} {% block 'body' %}
+
+
+<div class="col-xl-12">
+    <div class="">
+        <div class="" style="margin-bottom:50px ;">
+
+            <div id="dlab_W_TimeLine02" class="widget-timeline dlab-scroll style-1 ps ps--active-y p-3 ">
+
+                <h1 style="  background-color: #565656;
+                        color: transparent;
+                        text-shadow: 0px 2px 3px rgba(255,255,255,0.5);
+                        -webkit-background-clip: text;
+                           -moz-background-clip: text;
+                                background-clip: text;font-weight: 900;"> Notifications
+                </h1>
+
+                <ul class="timeline">
+                    {% for x in notifs %}
+                    <li>
+                        <div class="timeline-badge {{x.get_level_display}}"></div>
+                        <a class="timeline-panel text-muted" href="javascript:void(0);">
+                            <span>il y a {{x.date|timesince}}</span>
+                            <h6 class="mb-0"> <strong class="text-{{x.get_level_display}}"> {{x.responsible.prenom}}</strong> {{ x.message }} .
+
+                            </h6>
+                        </a>
+                    </li>
+
+                    {% empty%}
+
+                    <li>
+                        <div class="timeline-badge primary"></div>
+                        <a class="timeline-panel text-muted" href="javascript:void(0);">
+                            <span>----------</span>
+                            <h6 class="mb-0">Pas de notifications pour l'instant
+
+                                <strong class="text-primary">:)</strong>.</h6>
+                        </a>
+                    </li>
+
+                    {% endfor %}
+
+
+
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

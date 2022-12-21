@@ -1,0 +1,170 @@
+{% extends 'base.html' %} {% load static %} {% block 'css' %}
+
+<link href="{% static 'vendor/sweetalert2/dist/sweetalert2.min.css' %}" rel="stylesheet"> {% endblock %} {% block 'body' %}
+<div class="row page-titles">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a href="{% url 'concurent' concurent.nom %}">{{concurent.prenom}}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'concurent' concurent.nom %}">Profile</a></li>
+        <li class="breadcrumb-item"><a href="#">Question</a></li>
+    </ol>
+</div>
+
+<div class="col-xl-12 col-xxl-12">
+    <div class="card">
+        <div class="card-header border-0 pb-0">
+            <div>
+                <h4 class="card-title mb-2">Nouvel question</h4>
+                <span class="fs-12">La question sera pour {{concurent.prenom}}. Bonne chance a toi!  ;)</span>
+            </div>
+        </div>
+        <div class="card-body">
+
+            <div class="col-xl-12">
+                <div class="user-bx">
+                    <img src="{{concurent.profile.url}}" alt="">
+                    <div>
+                        <h6 class="user-name">{{concurent.nom}} {{concurent.prenom}}</h6>
+                        <span class="meta">{{concurent.pointCum}} points</span>
+                    </div>
+                    <i class="las la-check-circle check-icon"></i>
+                </div>
+            </div>
+            <div id="info">
+                <h4 class="mt-3 mb-0">Entrer le numero de question:</h4>
+                <div class="format-slider">
+                    <div class="row">
+                        <span class="fs-30 col-md-2">#</span>
+                        <input class="form-control amount-input col-md-6" title="Formatted number" id="input-format" style="border: 1px gray dotted;">
+                        <button class="btn btn-rounded btn-info mb-1 me-1" style="width:30% ;margin-top: 10px;" onclick="research('{{question.get_research_url}}')">
+                            <span class="btn-icon-start text-info"><i class="fa fa-search color-info"></i></span> Rechercher
+                        </button>
+                    </div>
+                    <div id="slider-format"></div>
+                </div>
+                <div class="text-secondary fs-16 d-flex justify-content-between font-w600 mt-4">
+                    <span>Manche {{manche.numero}}</span>
+                </div>
+            </div>
+
+            <div id="question" style="display:none">
+
+                <div class="">
+                    <div class="circle" style="align-items:center ;justify-content:center;" style="float:right">
+                        <svg width="300" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+                        <g transform="translate(110,110)">
+                            <circle r="100" class="e-c-base" />
+                            <g transform="rotate(-90)">
+                                <circle r="100" class="e-c-progress" />
+                                <g id="e-pointer">
+                                    <circle cx="100" cy="0" r="8" class="e-c-pointer" />
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
+                        <div class="setters" style="margin-top:350px ; margin-left:30px;float:right;">
+                            <div class="minutes-set">
+                                <button data-setter="minutes-plus">+</button>
+                                <button data-setter="minutes-minus">-</button>
+                            </div>
+                            <div class="seconds-set">
+                                <button data-setter="seconds-plus">+</button>
+                                <button data-setter="seconds-minus">-</button>
+                            </div>
+                        </div>
+
+                        <div class="controlls" style="margin:auto;margin-top:150px ;left:100px ;float: right;">
+                            <div class="display-remain-time">00:30</div>
+                            <button class="play" id="pause"></button>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="col-xl-6" style="float: right;margin-top:-300px">
+                    <div class="card">
+                        <div class="card-header d-block">
+                            <h4 class="card-title">Question pour {{concurent.prenom}}</h4>
+                            <p class="m-0 subtitle">Pour la question vous disposee en tout de <code>30 seconds</code> bonne <code> chance</code></p>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="accordion accordion-primary-solid" id="accordion-two">
+                                <div class="accordion-item">
+                                    <div class="accordion-header  rounded-lg" id="accord-2One" data-bs-toggle="collapse" data-bs-target="#collapse2One" aria-controls="collapse2One" aria-expanded="true" role="button">
+                                        <span class="accordion-header-text" id="qst_number">Question #2421</span>
+                                        <span class="accordion-header-indicator"></span>
+                                    </div>
+                                    <div id="collapse2One" class="collapse accordion__body " aria-labelledby="accord-2One" data-bs-parent="#accordion-two">
+                                        <div class="accordion-body-text" id="qst_body">
+                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <div class="accordion-header  rounded-lg" id="accord-3One" data-bs-toggle="collapse" data-bs-target="#collapse3One" aria-controls="collapse3One" aria-expanded="true" role="button">
+                                        <span class="accordion-header-text" id="">Reponse a la question</span>
+                                        <span class="accordion-header-indicator"></span>
+                                    </div>
+                                    <div id="collapse3One" class="collapse accordion__body " aria-labelledby="accord-3One" data-bs-parent="#accordion-two">
+                                        <div class="accordion-body-text" id="rpnse_body" data-url_reponse="{% url 'reponse' %}" data-concurent_nom="{{concurent.nom}}">
+                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="" id="confirms">
+                        <button class="btn btn-success btn sweet-success m-1">Trouv&eacute;e</button>
+                        <button class="btn btn-danger btn sweet-wrong m-1">Rat&eacute;e</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-12 m-3 m-t-0" id="replique" style="display: none;">
+                <h4>Repliques</h4>
+                <select id="replique_select" class="bootstrap-select form-control amount-input m-1" style="border:1px dotted gray ;max-width:600px;font-size:medium;">
+                
+                <option value="">Selectionner le concurent</option>
+                {% for x in concurents %}
+                    <option value="{{x.nom}}">{{x.nom}} {{x.prenom}}</option>
+    
+                {% endfor %}
+    
+                </select>
+                <button style="width:300px ;margin-top: 10px;" class="btn btn-success btn sweety-success m-1">Trouv&eacute;e</button>
+                <button style="width:300px ;margin-top: 10px;" class="btn btn-danger btn sweety-wrong m-1">Rat&eacute;e</button>
+            </div>
+        </div>
+
+
+        <br><br>
+        <div class="col-xxl-12 m-3 m-t-0">
+            <h4 class="mt-3 mb-3">Autres joueurs</h4>
+            <ul class="user-list">
+                {% for x in concurents %}
+                <a href="{% url 'question' x.nom %}">
+                    <li><img src="{{x.profile.url}}" style="object-fit: cover;" alt=""></li>
+                </a>
+                {% endfor %}
+            </ul>
+
+        </div>
+
+
+    </div>
+    <div class="card-footer border-0 pt-0">
+        <a href="javascript:void(0);" class="btn btn-primary d-block btn-lg text-uppercase">Rechercher la
+                question</a>
+
+    </div>
+
+</div>
+</div>
+
+{% endblock %} {% block scripts %}
+<script src="{% static 'vendor/sweetalert2/dist/sweetalert2.min.js' %}"></script>
+<script src="{% static 'js/plugins-init/sweetalert.init.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+
+{% endblock %}

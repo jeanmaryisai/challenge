@@ -17,7 +17,11 @@
                         <div class="accordion-header collapsed" data-bs-toggle="collapse" data-bs-target="#default_collapseOne{{forloop.counter}}">
                             <div class="d-flex align-items-center">
                                 <div class="profile-image">
-                                    <img src="{{concurent.concurent.profile.url}}" alt="" style="object-fit:cover ;"> {% if forloop.counter == 1 %}
+                                    <!-- <img src="{{concurent.concurent.profile.url}}" alt="" style="object-fit:cover ;">  -->
+                                                    <div class="media me-2 media-info">
+                                                        {{ concurent.concurent.prenom|slice:":2" }}
+                                                    </div>
+                                    {% if forloop.counter == 1 %}
                                     <span class="bg-success">
                                         <svg style="color:#fff ;" class="svg-snoweb svg-theme-light" height="30"
                                             preserveaspectratio="xMidYMid meet" viewbox="0 0 100 100" width="30" x="0"

@@ -357,7 +357,7 @@ def like(request,slug):
             messages.warning(request,'Vous retirer le like de cette dedicace')
             return redirect('dedicaces')
         user.dedicaces.add(dedicace)
-        Notification.objects.create(message=f'On a liker la dedicace de {dedicace.emetteur} a {dedicace.recepteur}',level='i')
+        Notification.objects.create(message=f'{user.user.username} a liker la dedicace de {dedicace.emetteur} a {dedicace.recepteur}',level='i')
         messages.info(request,'vous avez liker avec success')
         return redirect('dedicaces')
 
@@ -379,9 +379,7 @@ def Cadeau(request):
     questions=cadeau_quesion.objects.filter(cadeau=c)
     if request.method == 'POST':
         user,created=fake_user.objects.get_or_create(user=request.user)
-        if user in c.winners.all():
-            messages.info(request,'Vous avez deja eu gagnee le prime')
-            return redirect ('home')
+
         l=[]
         for x in questions:
             l.append((x.reponse_true,request.POST[f'reponse-{x.id}']))
@@ -395,7 +393,7 @@ def Cadeau(request):
         if not c.is_open:
             return render(request,'manque.html',{'number':error,'msj':"Vous n'avez pas ete assez rapide. Une prochaine fois"})
         
-        order.objects.create(cadeau=c,user=user)
+        orw,created=order.objects.get_or_create(cadeau=c,user=user)
         Notification.objects.create(message=f'{user.user.username} a recu un cadeau',level='s')
         return render(request,'gain.html',{'cadeau':c})
 

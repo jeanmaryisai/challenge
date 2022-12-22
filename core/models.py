@@ -244,6 +244,9 @@ class cadeau(models.Model):
     show=models.BooleanField(default=False)
 
     @property
+    def winners(self):
+        return order.object.filter(cadeau=self)
+    @property
     def is_open(self):
         if order.objects.filter(cadeau=self).count() < self.nombre_disponible:
             return True
@@ -269,6 +272,7 @@ class cadeau_quesion(models.Model):
     @property
     def list_reponse(self):
         y=[self.reponse_fake_3,self.reponse_fake_2,self.reponse_fake_1,self.reponse_true]
+        random.shuffle(y)
         return y
 
 class order(models.Model):

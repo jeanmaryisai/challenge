@@ -9,6 +9,13 @@
 {% endblock %}
 
 {% block 'body' %}
+<h1 style="  background-color: #565656;
+                        color: transparent;
+                        text-shadow: 0px 2px 3px rgba(255,255,255,0.5);
+                        -webkit-background-clip: text;
+                           -moz-background-clip: text;
+                                background-clip: text;font-weight: 900;"> Cadeau
+                </h1>
 
                     <div class="col-xl-12 col-xxl-12">
                         <div class="card">
@@ -18,217 +25,71 @@
                             <div class="card-body">
 								<div id="smartwizard" class="form-wizard order-create">
 									<ul class="nav nav-wizard">
-										<li><a class="nav-link" href="#wizard_Service"> 
-											<span>1</span> 
+										{% for x in questions %}
+										<li><a class="nav-link" href="#section-{{forloop.counter}}"> 
+											<span>{{forloop.counter}}</span> 
 										</a></li>
-										<li><a class="nav-link" href="#wizard_Time">
-											<span>2</span>
-										</a></li>
-										<li><a class="nav-link" href="#wizard_Details">
-											<span>3</span>
-										</a></li>
-										<li><a class="nav-link" href="#wizard_Payment">
-											<span>4</span>
+										{% endfor %}
+										<li><a class="nav-link" href="#submit"> 
+											<span><i class="flaticon-013-checkmark"></i></span> 
 										</a></li>
 									</ul>
+									<form action='' method="POST" >
+										{% csrf_token %}
 									<div class="tab-content">
-										<div id="wizard_Service" class="tab-pane" role="tabpanel">
+										{% for x in questions %}
+										<div id="section-{{forloop.counter}}" class="tab-pane" role="tabpanel">
 											<div class="row">
 
 												<div class="col-lg-12 mb-2">
-													<h2>Qui a tue le pere de Nathan</h2>
+
+													<h2>{{ x.libelle }}</h2>
 													<div class="mb-3">
+														{% for y in x.list_reponse %}
 														<div class="form-check">
-                                                        	<input class="form-check-input" type="radio" name="gridRadios" value="option1" checked="">
+                                                        	<input class="form-check-input" type="radio" name="reponse-{{x.id}}" value="{{y}}" checked='False'>
                                                         	<label class="form-check-label">
-                                                            	Alvarez
+                                                            	{{y}}
                                                         	</label>
                                                     	</div>
-														<div class="form-check">
-                                                        	<input class="form-check-input" type="radio" name="gridRadios" value="option1" checked="">
+                                                    	{% endfor %} 
+                                                    	<div class="form-check">
+                                                        	<input class="form-check-input" type="radio" name="reponse-{{x.id}}" value="0" checked='False'>
                                                         	<label class="form-check-label">
-                                                            	Julian
+                                                            	Je ne sais pas
                                                         	</label>
                                                     	</div>
-														<div class="form-check">
-                                                        	<input class="form-check-input" type="radio" name="gridRadios" value="option1" checked="">
-                                                        	<label class="form-check-label">
-                                                            	Quipa
-                                                        	</label>
-                                                    	</div>                                                    	                                                    	
-														<div class="form-check">
-                                                        	<input class="form-check-input" type="radio" name="gridRadios" value="option1" checked="">
-                                                        	<label class="form-check-label">
-                                                            	Sadio Mane
-                                                        	</label>
-                                                    	</div>
-                                                    														</div>
+                                                    </div>
 												</div>
 											</div>
 										</div>
-										<div id="wizard_Time" class="tab-pane" role="tabpanel">
-											<div class="row">
-												<div class="col-lg-6 mb-2">
-													<div class="mb-3">
-														<label class="text-label form-label">Company Name*</label>
-														<input type="text" name="firstName" class="form-control" placeholder="Cellophane Square" required="">
-													</div>
-												</div>
-												<div class="col-lg-6 mb-2">
-													<div class="mb-3">
-														<label class="text-label form-label">Company Email Address*</label>
-														<input type="email" class="form-control" id="emial1" placeholder="example@example.com.com" required="">
-													</div>
-												</div>
-												<div class="col-lg-6 mb-2">
-													<div class="mb-3">
-														<label class="text-label form-label">Company Phone Number*</label>
-														<input type="text" name="phoneNumber" class="form-control" placeholder="(+1)408-657-9007" required="">
-													</div>
-												</div>
-												<div class="col-lg-6 mb-2">
-													<div class="mb-3">
-														<label class="text-label form-label">Your position in Company*</label>
-														<input type="text" name="place" class="form-control" required="">
-													</div>
-												</div>
-											</div>
-										</div>
-										<div id="wizard_Details" class="tab-pane" role="tabpanel">
-											<div class="row">
-												<div class="col-sm-4 mb-2">
-													<h4>Monday *</h4>
-												</div>
-												<div class="col-6 col-sm-4 mb-2">
-													<div class="mb-3">
-														<input class="form-control" value="9.00" type="number" name="input1" id="input1">
-													</div>
-												</div>
-												<div class="col-6 col-sm-4 mb-2">
-													<div class="mb-3">
-														<input class="form-control" value="6.00" type="number" name="input2" id="input2">
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-sm-4 mb-2">
-													<h4>Tuesday *</h4>
-												</div>
-												<div class="col-6 col-sm-4 mb-2">
-													<div class="mb-3">
-														<input class="form-control" value="9.00" type="number" name="input3" id="input3">
-													</div>
-												</div>
-												<div class="col-6 col-sm-4 mb-2">
-													<div class="mb-3">
-														<input class="form-control" value="6.00" type="number" name="input4" id="input4">
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-sm-4 mb-2">
-													<h4>Wednesday *</h4>
-												</div>
-												<div class="col-6 col-sm-4 mb-2">
-													<div class="mb-3">
-														<input class="form-control" value="9.00" type="number" name="input5" id="input5">
-													</div>
-												</div>
-												<div class="col-6 col-sm-4 mb-2">
-													<div class="mb-3">
-														<input class="form-control" value="6.00" type="number" name="input6" id="input6">
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-sm-4 mb-2">
-													<h4>Thrusday *</h4>
-												</div>
-												<div class="col-6 col-sm-4 mb-2">
-													<div class="mb-3">
-														<input class="form-control" value="9.00" type="number" name="input7" id="input7">
-													</div>
-												</div>
-												<div class="col-6 col-sm-4 mb-2">
-													<div class="mb-3">
-														<input class="form-control" value="6.00" type="number" name="input8" id="input8">
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-sm-4 mb-2">
-													<h4>Friday *</h4>
-												</div>
-												<div class="col-6 col-sm-4 mb-2">
-													<div class="mb-3">
-														<input class="form-control" value="9.00" type="number" name="input9" id="input9">
-													</div>
-												</div>
-												<div class="col-6 col-sm-4 mb-2">
-													<div class="mb-3">
-														<input class="form-control" value="6.00" type="number" name="input10" id="input10">
-													</div>
-												</div>
-											</div>
-										</div>
-										<div id="wizard_Payment" class="tab-pane" role="tabpanel">
+
+										{%endfor%}
+										<div id="submit" class="tab-pane" role="tabpanel">
 											<div class="row emial-setup">
-												<div class="col-lg-3 col-sm-6 col-6">
-													<div class="mb-3">
-														<label for="mailclient11" class="mailclinet mailclinet-gmail">
-															<input type="radio" name="emailclient" id="mailclient11">
-															<span class="mail-icon">
-																<i class="mdi mdi-google-plus" aria-hidden="true"></i>
-															</span>
-															<span class="mail-text">I'm using Gmail</span>
-														</label>
-													</div>
-												</div>
-												<div class="col-lg-3 col-sm-6 col-6">
-													<div class="mb-3">
-														<label for="mailclient12" class="mailclinet mailclinet-office">
-															<input type="radio" name="emailclient" id="mailclient12">
-															<span class="mail-icon">
-																<i class="mdi mdi-office" aria-hidden="true"></i>
-															</span>
-															<span class="mail-text">I'm using Office</span>
-														</label>
-													</div>
-												</div>
-												<div class="col-lg-3 col-sm-6 col-6">
-													<div class="mb-3">
-														<label for="mailclient13" class="mailclinet mailclinet-drive">
-															<input type="radio" name="emailclient" id="mailclient13">
-															<span class="mail-icon">
-																<i class="mdi mdi-google-drive" aria-hidden="true"></i>
-															</span>
-															<span class="mail-text">I'm using Drive</span>
-														</label>
-													</div>
-												</div>
-												<div class="col-lg-3 col-sm-6 col-6">
-													<div class="mb-3">
-														<label for="mailclient14" class="mailclinet mailclinet-another">
-															<input type="radio" name="emailclient" id="mailclient14">
-															<span class="mail-icon">
-																<i class="fas fa-question-circle" aria-hidden="true"></i>
-															</span>
-															<span class="mail-text">Another Service</span>
-														</label>
-													</div>
+					                            <div class="card-body text-center ai-icon  text-primary">
+					                            	<i class="flaticon-013-checkmark"></i>
+													<svg id="rocket-icon" class="my-2" viewbox="0 0 24 24" width="80" height="80" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round">
+														<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+														<line x1="3" y1="6" x2="21" y2="6"></line>
+														<path d="M16 10a4 4 0 0 1-8 0"></path>
+													</svg><i class="flaticon-013-checkmark"></i>
+													<h4 class="my-2">Envoyer votre reponse....</h4>
+													<button type="submit" class="btn my-2 btn-primary btn-lg px-4"><i class="fa fa-usd"></i> Envoyer</button>
 												</div>
 											</div>
 
 											<div class="row">
 												<div class="col-12">
 													<div class="skip-email text-center">
-														<p>Or if want skip this step entirely and setup it later</p>
-														<a href="javascript:void(0)">Skip step</a>
+														<p>Assurez vous de bien repondre a tout les questions avant d'envoyer votre reponse</p>
+														<a href="javascript:void(0)">Bonne chance</a>
 													</div>
 												</div>
 											</div>
-										</div>
+										</div> 
 									</div>
+									</form>
 								</div>
                             </div>
                         </div>

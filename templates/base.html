@@ -17,7 +17,7 @@
     <meta name="format-detection" content="telephone=no">
 
     <!-- PAGE TITLE HERE -->
-    <title>Courcour de Genie</title>
+    <title>AJEDPV</title>
 
     <!-- FAVICONS ICON -->
     <link rel="shortcut icon" type="image/png" href="{% static 'image/favicon.png' %}">
@@ -88,10 +88,39 @@
                     <div class="collapse navbar-collapse justify-content-between">
                         <div class="header-left">
                             <div class="dashboard_bar">
-                                Concours de G&eacute;nie Biblique
+                                Fete de Noel
                             </div>
                         </div>
                         <ul class="navbar-nav header-right">
+                            <li class="nav-item dropdown notification_dropdown">
+                                <a class="nav-link  ai-icon" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
+                                    <i class="flaticon-045-heart" style="color:gray;font-size:1.4rem"></i>
+
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <div id="dlab_W_Notification1" class="widget-media dlab-scroll p-3">
+                                        <ul class="timeline">
+                                            {% for x in dedicaces %}
+                                            <li>
+                                                <div class="timeline-panel">
+                                                    <div class="media me-2 media-info">
+                                                        {{ x.emetteur|slice:":4" }}
+                                                    </div>
+                                                    <div class="media-body">
+                                                        {% if x.replique_a %}
+                                                        <small class='badge badge-secondary'><i class="fa fa-reply"></i>  r&eacute;plique a la d&eacute;dicaces de {{x.replique_a.emetteur}} </small> {% endif %}
+                                                        <h6 class="mb-1">{{ x.message }}</h6>
+                                                        <small class="d-block">A {{ x.recepteur }}</small>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    <a class="all-notification" href="{% url 'dedicaces' %}">Voir tout les d&eacute;dicaces <i
+                                            class="ti-arrow-end"></i></a>
+                                </div>
+                            </li>
                             <li class="nav-item dropdown notification_dropdown">
                                 <a class="nav-link" href="javascript:void(0);" data-bs-toggle="dropdown">
 
@@ -140,39 +169,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown notification_dropdown">
-                                <a class="nav-link  ai-icon" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
-                                    <svg width="28" height="28" viewbox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M3.88552 6.2921C1.95571 6.54135 0.439911 8.19656 0.439911 10.1896V10.7253C0.439911 12.8874 2.21812 14.6725 4.38019 14.6725H12.7058V24.9768H7.01104C5.77451 24.9768 4.82009 24.0223 4.82009 22.7858V18.4039C4.84523 16.6262 2.16581 16.6262 2.19096 18.4039V22.7858C2.19096 25.4334 4.36345 27.6059 7.01104 27.6059H21.0331C23.6807 27.6059 25.8532 25.4334 25.8532 22.7858V13.9981C26.9064 13.286 27.6042 12.0802 27.6042 10.7253V10.1896C27.6042 8.17115 26.0501 6.50077 24.085 6.28526C24.0053 0.424609 17.6008 -1.28785 13.9827 2.48534C10.3936 -1.60185 3.7545 1.06979 3.88552 6.2921ZM12.7058 5.68103C12.7058 5.86287 12.7033 6.0541 12.7058 6.24246H6.50609C6.55988 2.31413 11.988 1.90765 12.7058 5.68103ZM21.4559 6.24246H15.3383C15.3405 6.05824 15.3538 5.87664 15.3383 5.69473C15.9325 2.04532 21.3535 2.18829 21.4559 6.24246ZM4.38019 8.87502H12.7058V12.0382H4.38019C3.62918 12.0382 3.06562 11.4764 3.06562 10.7253V10.1896C3.06562 9.43859 3.6292 8.87502 4.38019 8.87502ZM15.3383 8.87502H23.6656C24.4166 8.87502 24.9785 9.43859 24.9785 10.1896V10.7253C24.9785 11.4764 24.4167 12.0382 23.6656 12.0382H15.3383V8.87502ZM15.3383 14.6725H23.224V22.7858C23.224 24.0223 22.2696 24.9768 21.0331 24.9768H15.3383V14.6725Z"
-                                            fill="#4f7086"></path>
-                                    </svg>
 
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <div id="dlab_W_Notification1" class="widget-media dlab-scroll p-3">
-                                        <ul class="timeline">
-                                            {% for x in dedicaces %}
-                                            <li>
-                                                <div class="timeline-panel">
-                                                    <div class="media me-2 media-info">
-                                                        {{ x.emetteur|slice:":4" }}
-                                                    </div>
-                                                    <div class="media-body">
-                                                        {% if x.replique_a %}
-                                                        <small class='badge badge-secondary'><i class="fa fa-reply"></i>  r&eacute;plique a la d&eacute;dicaces de {{x.replique_a.emetteur}} </small> {% endif %}
-                                                        <h6 class="mb-1">{{ x.message }}</h6>
-                                                        <small class="d-block">A {{ x.recepteur }}</small>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
-                                    <a class="all-notification" href="{% url 'dedicaces' %}">Voir tout les d&eacute;dicaces <i
-                                            class="ti-arrow-end"></i></a>
-                                </div>
-                            </li>
                         </ul>
                     </div>
                 </nav>
@@ -194,7 +191,6 @@
                             <img src="{% static 'images/profile/pic1.jpg' %}" width="20" alt="">
                             <div class="header-info ms-3">
                                 <span class="font-w600 " >{% if request.user.is_authenticated %} Joyeux noel {{request.user.username}}{% else %}<span class="bg-primary badge badge-sm">Profile</span>{% endif %}</span>
-                                <small class="text-end font-w400">Profiter de la fete ;)</small> 
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
@@ -205,7 +201,7 @@
                             </a>
 
                             {% else %}
-                            <a href="email-inbox.html" class="dropdown-item ai-icon">
+                            <a href="{% url 'envellope' %}" class="dropdown-item ai-icon">
                                 <svg id="icon-inbox" xmlns="http://www.w3.org/2000/svg" class="text-success" width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                                 <span class="ms-2">Mes Enveloppes</span>
                             </a>
@@ -245,22 +241,22 @@
                     </li>
 
 
-                    <!-- <li>
-                        <a href="widget-basic.html" class="ai-icon" aria-expanded="false">
-                            <i class="flaticon-013-checkmark"></i>
-                            <span class="nav-text">Resultats</span>
+                    <li>
+                        <a href="{% url 'dedicaces' %}" class="ai-icon" aria-expanded="false">
+                            <i class="flaticon-045-heart"></i>
+                            <span class="nav-text">Dedicaces</span>
                         </a>
-                    </li> -->
+                    </li> 
 
                     <li>
-                        <a class="ai-icon" href="{% url 'dedicaces' %}" aria-expanded="false">
+                        <a class="ai-icon" href="{% url 'cadeau' %}" aria-expanded="false">
                             <i class=""> <svg width="28" height="28" viewbox="0 0 28 28" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M3.88552 6.2921C1.95571 6.54135 0.439911 8.19656 0.439911 10.1896V10.7253C0.439911 12.8874 2.21812 14.6725 4.38019 14.6725H12.7058V24.9768H7.01104C5.77451 24.9768 4.82009 24.0223 4.82009 22.7858V18.4039C4.84523 16.6262 2.16581 16.6262 2.19096 18.4039V22.7858C2.19096 25.4334 4.36345 27.6059 7.01104 27.6059H21.0331C23.6807 27.6059 25.8532 25.4334 25.8532 22.7858V13.9981C26.9064 13.286 27.6042 12.0802 27.6042 10.7253V10.1896C27.6042 8.17115 26.0501 6.50077 24.085 6.28526C24.0053 0.424609 17.6008 -1.28785 13.9827 2.48534C10.3936 -1.60185 3.7545 1.06979 3.88552 6.2921ZM12.7058 5.68103C12.7058 5.86287 12.7033 6.0541 12.7058 6.24246H6.50609C6.55988 2.31413 11.988 1.90765 12.7058 5.68103ZM21.4559 6.24246H15.3383C15.3405 6.05824 15.3538 5.87664 15.3383 5.69473C15.9325 2.04532 21.3535 2.18829 21.4559 6.24246ZM4.38019 8.87502H12.7058V12.0382H4.38019C3.62918 12.0382 3.06562 11.4764 3.06562 10.7253V10.1896C3.06562 9.43859 3.6292 8.87502 4.38019 8.87502ZM15.3383 8.87502H23.6656C24.4166 8.87502 24.9785 9.43859 24.9785 10.1896V10.7253C24.9785 11.4764 24.4167 12.0382 23.6656 12.0382H15.3383V8.87502ZM15.3383 14.6725H23.224V22.7858C23.224 24.0223 22.2696 24.9768 21.0331 24.9768H15.3383V14.6725Z"
                                         fill="gray"></path>
                                 </svg></i>
-                            <span class="nav-text">D&eacute;dicaces</span>
+                            <span class="nav-text">Cadeaux</span>
                         </a>
                     </li>
 

@@ -22,6 +22,8 @@ def get_client_ip(request):
 def home(request):
     if request.user.is_authenticated:
         user_Fake,created=fake_user.objects.get_or_create(user=request.user)
+        user_Fake.ip=get_client_ip(request)
+        user_Fake.save()
 
     manches=Manche.objects.all().order_by('numero')
 
@@ -367,6 +369,55 @@ def next_prog(request):
     p.save()
     return redirect('programme')
 
-def cadeau(request):
-    return render(request,'wizard.html')
+@login_required
+def Cadeau(request):
+    try:
+        c=cadeau.objects.get(show=True)
+    except:
+        return render(request,'empty_cadeau.html')
 
+    questions=cadeau_quesion.objects.filter(cadeau=c)
+    if request.method == 'POST':
+        user,created=fake_user.objects.get_or_create(user=request.user)
+        l=[]
+        for x in questions:
+            l.append((x.reponse_true,request.POST[f'reponse-{x.id}']))
+        error=0
+        for x in l:
+            if x[0] != x[1]:
+                error=error +1
+        if error != 0:
+            return render(request,'manque.html',{'number':error,'msj':"Vous n'avez pas bien repondu a toutes les questions."})
+        
+        if not c.is_open:
+            return render(request,'manque.html',{'number':error,'msj':"Vous n'avez pas ete assez rapide. Une prochaine fois"})
+        
+        order.objects.create(cadeau=c,user=user)
+        Notification.objects.create(message=f'{user.user.username} a recu un cadeau',level='s')
+        return render(request,'gain.html',{'cadeau':c})
+
+    context={
+    'cadeau': c,
+    'questions': questions,
+        }
+        
+    return render(request,'wizard.html',context)
+
+@login_required
+def envellope(request):
+    user=fake_user.objects.get(user=request.user)
+    od= order.objects.filter(user=user)
+    return render(request,'enveloppe.html',{'cadeaux':od})
+
+@login_required
+def redeem(request,slug):
+    user=fake_user.objects.get(user=request.user)
+    try:
+        od=order.objects.get(user=user,id=slug)
+    except:
+        messages.warning(request,"Un erreur s'est produite")
+        return redirect('home')
+    od.is_redeem= True
+    od.save()
+    messages.success(request,'Vous avez recuperer votre cadeau avec succes')
+    return redirect('envellope')

@@ -16,5 +16,7 @@ urlpatterns=[
     path('get_question/<slug>',get_question,name='get_question'),
     path('reponse',reponse,name='reponse'),
     path('next_prog/', next_prog, name='next_prog'),
-    path('cadeau',cadeau,name='cadeau')
+    path('cadeau',Cadeau,name='cadeau'),
+    path('envellope',envellope, name='envellope'),
+    path('redeem/<slug>',redeem, name='redeem')
 ]

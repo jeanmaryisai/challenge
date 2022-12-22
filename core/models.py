@@ -221,6 +221,8 @@ class Logs(models.Model):
     def __str__(self) -> str:
         return f'{self.concurent.nom}-{self.pointsCum}'
 
+
+
 class fake_user(models.Model):
     ip=models.CharField(max_length=100,null=True)
     user=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,null=True)
@@ -228,26 +230,51 @@ class fake_user(models.Model):
     dedicaces=models.ManyToManyField(Dedicace)
     default_name=models.CharField(max_length=2000,default='Annonyme')
     
-    # def __str__(self) -> str:
-    #     return f'{self.user.username}'
+    
+    def __str__(self) -> str:
+        try:
+         return f'{self.user.username}'
+        except:
+            return f'Anonymous_user{self.id}'
 
 
 class cadeau(models.Model):
-    question=models.TextField()
-    is_answered=models.BooleanField(default=False)
+    nombre_disponible=models.IntegerField()
     cadeau=models.TextField()
     show=models.BooleanField(default=False)
-    is_redeem=models.BooleanField(default=False)
 
+    @property
+    def is_open(self):
+        if order.objects.filter(cadeau=self).count() < self.nombre_disponible:
+            return True
+        else:
+            return False
     
+
+    def __str__(self):
+        return self.cadeau[:24]
+    
+
 class cadeau_quesion(models.Model):
-    cadeau=models.ForeignKey(cadeau,on_delete=models.CASCADE)
+    cadeau=models.ForeignKey(cadeau,on_delete=models.CASCADE,related_name='qsts')
     libelle=models.TextField()
     reponse_true=models.TextField()
     reponse_fake_1=models.TextField()
     reponse_fake_2=models.TextField()
     reponse_fake_3=models.TextField()
 
+    def __str__(self):
+        return self.libelle[:25]
+
     @property
     def list_reponse(self):
-        return random.shuffle([self.reponse_fake_3,self.reponse_fake_2,self.reponse_fake_1,self.reponse_true])
+        y=[self.reponse_fake_3,self.reponse_fake_2,self.reponse_fake_1,self.reponse_true]
+        return y
+
+class order(models.Model):
+    cadeau=models.ForeignKey(cadeau,on_delete=models.CASCADE)
+    user=models.ForeignKey(fake_user,on_delete=models.CASCADE)
+    is_redeem=models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.user}-{self.cadeau}'

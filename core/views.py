@@ -379,6 +379,9 @@ def Cadeau(request):
     questions=cadeau_quesion.objects.filter(cadeau=c)
     if request.method == 'POST':
         user,created=fake_user.objects.get_or_create(user=request.user)
+        if user in c.winners.all():
+            messages.info(request,'Vous avez deja eu gagnee le prime')
+            return redirect ('home')
         l=[]
         for x in questions:
             l.append((x.reponse_true,request.POST[f'reponse-{x.id}']))

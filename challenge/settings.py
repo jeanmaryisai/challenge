@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-p29ms!zuqh*)2m_-m$m*t!78vd=c8kev12d&ghh!=e_27qnen#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -163,13 +163,5 @@ CSRF_TRUSTED_ORIGINS = ['http://*.ajedpv.loca.lt','https://*.ajedpv.loca.lt','ht
 
 # STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# Email setting
-
-EMAIL_HOST= 'smtp.elasticemail.com'
-EMAIL_PORT= '587'
-EMAIL_HOST_USER='jeanmaryisai@gmail.com'
-EMAIL_HOST_PASSWORD='46B5863CB0D083F266E0609BBDD71538380F'
-EMAIL_USE_TLS=True
-EMAIL_USE_SSL= False
 
 LOGIN_REDIRECT_URL= 'home'

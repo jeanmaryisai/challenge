@@ -256,6 +256,14 @@ class cadeau(models.Model):
 
     def __str__(self):
         return self.cadeau[:24]
+
+    def save(self, *args, **kwargs):
+        if self.show:
+            for x in cadeau.objects.all():
+                x.show=False
+                x.save()
+            self.show=True        
+        super(Item, self).save(*args, **kwargs)
     
 
 class cadeau_quesion(models.Model):

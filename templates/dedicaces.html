@@ -6,7 +6,7 @@
     </ol>
 </div>
 <a href="{% url 'dedicaces'  %}" class="btn btn-primary mb-1 mg-auto" data-bs-toggle="modal" data-bs-target="#sendMessageModal" style="max-width:200px;margin:15px">
-    <span class="btn-icon-start text-primary"><i class="fa fa-plus color-primary"></i></span> nouvel d&eacute;dicace
+    <span class="btn-icon-start text-primary"><i class="fa fa-plus color-primary"></i></span> nouvelle d&eacute;dicace
 </a>
 <br>
 <!-- Modal -->
@@ -14,7 +14,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"> Envoyer d&eacute;dicace</h5>
+                <h5 class="modal-title"> Envoyez une d&eacute;dicace</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
@@ -58,7 +58,7 @@
     <img src="{% static 'images/profiles/8.jpg' %}" alt="" class="img-fluid w-100 rounded">
     <a class="post-title">
          {% if x.replique_a %}
-        <small class='badge badge-secondary'><i class="fa fa-reply"></i>  r&eacute;plique a la d&eacute;dicaces de {{x.replique_a.emetteur}} </small> {% endif %}
+        <small class='badge badge-secondary'><i class="fa fa-reply"></i>  r&eacute;plique &agrave; la d&eacute;dicace de {{x.replique_a.emetteur}} </small> {% endif %}
         <h3 class="text-black">D&eacute;dicaces de {{x.emetteur}} a {{x.recepteur}}</h3>
         {% if x.get_nombre_likes == 0 %}{% else %}
         <code>{{x.get_nombre_likes}} likes</code>
@@ -73,7 +73,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"> Envoyer une r&eacute;ponse</h5>
+                <h5 class="modal-title"> Envoyez une r&eacute;ponse</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">

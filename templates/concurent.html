@@ -49,7 +49,7 @@
                 </div>
                 <div>
                     <h2 class="text-white invoice-num">{{concurent.get_nombre_votes}}</h2>
-                    <span class="text-white fs-18">Total votes</span>
+                    <span class="text-white fs-18">Total de votes</span>
                 </div>
             </div>
         </div>
@@ -70,7 +70,7 @@
                 </div>
                 <div>
                     <h2 class="text-white invoice-num">{{concurent.get_questions_repondues|length}}</h2>
-                    <span class="text-white fs-18">Questions questions r&eacute;pondues</span>
+                    <span class="text-white fs-18">Questions  r&eacute;pondues</span>
                 </div>
             </div>
         </div>
@@ -91,7 +91,7 @@
                 </div>
                 <div>
                     <h2 class="text-white invoice-num">{{concurent.get_questions_ratees|length}}</h2>
-                    <span class="text-white fs-18">Total questions rat&eacute;e</span>
+                    <span class="text-white fs-18">Total des questions rat&eacute;es</span>
                 </div>
             </div>
         </div>
@@ -109,7 +109,7 @@
                 </div>
                 <div>
                     <h2 class="text-white invoice-num">{{manche.pointsCum}}</h2>
-                    <span class="text-white fs-18">Total point Cum pour cette manche</span>
+                    <span class="text-white fs-18">Total de points Cummul&eacute;es pour cette manche</span>
                 </div>
             </div>
         </div>
@@ -156,10 +156,10 @@
 
                             <a href="javascript:void(0);" class="btn btn-primary mb-1" data-bs-toggle="modal" data-bs-target="#sendMessageModal">
                                 <span class="btn-icon-start text-primary"><i
-                                        class="fa fa-envelope color-primary"></i></span> Envoyer D&eacute;dicaces</a>
+                                        class="fa fa-envelope color-primary"></i></span> Envoyer des D&eacute;dicaces</a>
                             {% if request.user.is_staff %}
                             <a href="{% url 'question' concurent.nom %}" class="btn btn-danger mb-1">
-                                <span class="btn-icon-start text-danger"><i class="fa fa-plus color-danger"></i></span> nouvel question</a>
+                                <span class="btn-icon-start text-danger"><i class="fa fa-plus color-danger"></i></span> nouvelle question</a>
                             {% endif %}
                         </div>
                     </div>
@@ -168,7 +168,7 @@
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title"> Envoyer Message</h5>
+                                    <h5 class="modal-title"> Envoyer un message</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
@@ -177,14 +177,14 @@
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
-                                                    <label class="text-black font-w600 form-label">Nom de la personne  <span
+                                                    <label class="text-black font-w600 form-label">Nom de la personne<span
                                                             class="required">*</span></label>
                                                     <input type="text" class="form-control" name="destinataire" value="{{concurent.prenom}}">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
-                                                    <label class="text-black font-w600 form-label">Votre nom Nom <span
+                                                    <label class="text-black font-w600 form-label">Votre nom<span
                                                             class="required">*</span></label>
                                                     <input type="text" class="form-control" placeholder="Entrer votre nom" name="destinateur" 
                                                     {% if request.user.is_authenticated %} value={{request.user.username}}
@@ -217,8 +217,8 @@
     <div class="col-xxl-8">
         <div class="row  mt-xl-0 mt-4">
             <div class="col-md-6">
-                <h4 class="card-title">Sommaires des Questions</h4>
-                <span>Voyons les statistics de {{concurent.prenom}}</span>
+                <h4 class="card-title">Sommaires des questions</h4>
+                <span>Voyons les statistiques de {{concurent.prenom}}</span>
                 <ul class="card-list mt-4">
                     <li><span class="bg-blue circle" id='nqrp' data-nombre={{concurent.get_questions_repondues|length}}></span>Questions r&eacute;pondues<span>{{concurent.get_questions_repondues|length}}</span></li>
                     <li><span class="bg-success circle" id='nrrp' data-nombre={{concurent.get_repliques|length}}></span>R&eacute;pliques<span>{{concurent.get_repliques|length}}</span></li>
@@ -233,8 +233,8 @@
         <div class="row">
             <div class="col-md-12">
                 <h4 class="card-title">Important</h4>
-                <span>Les questions sont sur <strong>30 points</strong> chacune et les r&eacute;pliques compte la moiti&eacute;
-                    donc <strong>15 points</strong>Une question rat&eacute;e donne la possibilit&eacute; a chacun des autre participants de faire une r&eacute;plique.</span>
+                <span>Les questions sont sur <strong>30 points</strong> chacune et les r&eacute;pliques comptent la moiti&eacute;
+                    donc <strong>15 points</strong>Une question rat&eacute;e donne la possibilit&eacute; &agrave; chacun des autres participants de faire une r&eacute;plique.</span>
             </div>
         </div>
     </div>
@@ -242,7 +242,7 @@
 <div class="col-xxl-12 col-lg-12">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Ligne Chart</h4>
+            <h4 class="card-title">Ligne Charte</h4>
         </div>
         <div class="card-body p-0">
             <div id="morris_line" class="morris_chart_height"></div>
@@ -261,8 +261,8 @@
 <div class="col-xxl-12">
     <div class="card transparent-card">
         <div class="card-header d-block">
-            <h4 class="card-title">List des question</h4>
-            <p class="m-0 subtitle">C'est une liste exhaustive des questions deja pos&eacute;e a {{concurent.prenom}}</p>
+            <h4 class="card-title">Liste des question</h4>
+            <p class="m-0 subtitle">C'est une liste exhaustive des questions d&eacute;j&agrave; pos&eacute;es &agrave; {{concurent.prenom}}</p>
         </div>
         <div class="card-body">
 
@@ -273,7 +273,7 @@
                     <div class="accordion-header  rounded-lg" id="accord-10One" data-bs-toggle="collapse" data-bs-target="#collapse{{forloop.counter}}One" aria-controls="collapse{{forloop.counter}}One" aria-expanded="true" role="button">
                         <span class="accordion-header-icon"></span>
                         <span class="accordion-header-text">Question #{{x.number}} 
-                            {% if x.repondu %}<span class="badge badge-success badge-sm">Repondu</span>{% else %}
+                            {% if x.repondu %}<span class="badge badge-success badge-sm">R&eacute;pondue</span>{% else %}
                         <span class="badge badge-danger badge-sm">Rat&eacute;e</span> {% endif %}
                         </span>
                         <span class="accordion-header-indicator"></span>
@@ -289,7 +289,7 @@
                     </div>
                 </div>
                 {%empty%}
-                <h2>Pas encore de questions pos&eacute;e</h2>
+                <h2>Pas encore de questions pos&eacute;es</h2>
 
                 {%endfor%}
             </div>

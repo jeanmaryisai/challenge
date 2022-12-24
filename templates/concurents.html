@@ -5,7 +5,7 @@
         <div class="card-header d-block d-sm-flex border-0">
             <div class="me-3">
                 <h4 class="card-title mb-2">Les concurents</h4>
-                <span class="fs-12">Les concurents sont affich&eacute;s en fonction de leur points au cours de la derniere manche en date.</span>
+                <span class="fs-12">Les concurents sont affich&eacute;s en fonction de leurs points au cours de la derni&egrave;re manche en date.</span>
             </div>
         </div>
         <div class="card-body tab-content p-0">
@@ -73,19 +73,19 @@
                                     <span class="font-w500">#{{concurent.concurent.id_fake}}</span>
                                 </div>
                                 <div class="me-3 mb-3">
-                                    <p class="fs-12 mb-2">Points pour la premiere manche</p>
+                                    <p class="fs-12 mb-2">Points pour la premi&egrave;re manche</p>
                                     <span class="font-w500">{{concurent.concurent.get_manches.0.pointsCum}} points</span>
                                 </div>
                                 <div class="me-3 mb-3">
-                                    <p class="fs-12 mb-2">Points pour la deuxieme manche</p>
+                                    <p class="fs-12 mb-2">Points pour la deuxi&egrave;me manche</p>
                                     <span class="font-w500">{{concurent.concurent.get_manches.1.pointsCum}} points</span>
                                 </div>
                                 <div class="me-3 mb-3">
-                                    <p class="fs-12 mb-2">Points pour la troisieme manche</p>
+                                    <p class="fs-12 mb-2">Points pour la troisi&egrave;me manche</p>
                                     <span class="font-w500">{{concurent.concurent.get_manches.2.pointsCum}} points</span>
                                 </div>
                                 <div class="me-3 mb-3">
-                                    <p class="fs-12 mb-2"> Points pour la Derniere manche</p>
+                                    <p class="fs-12 mb-2"> Points pour la derni&egrave;re manche</p>
                                     <span class="font-w500">{{concurent.concurent.get_manches.3.pointsCum}} points</span>
                                 </div>
                                 <a href="{% url 'concurent' concurent.concurent.nom %}">
@@ -101,7 +101,7 @@
                                             d="M12 8C12.5523 8 13 7.55228 13 7C13 6.44771 12.5523 6 12 6C11.4477 6 11 6.44771 11 7C11 7.55228 11.4477 8 12 8Z"
                                             fill="#fff"></path>
                                     </svg>
-                                        <p class="mb-0 fs-14">Clicker pour voir le joueur en details </p>
+                                        <p class="mb-0 fs-14">Clickez pour voir le joueur en details </p>
                                     </div>
                                 </a>
                             </div>

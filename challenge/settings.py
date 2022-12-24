@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-p29ms!zuqh*)2m_-m$m*t!78vd=c8kev12d&ghh!=e_27qnen#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -167,7 +167,7 @@ STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CSRF_TRUSTED_ORIGINS = ['http://*.ajedpv.loca.lt','https://*.ajedpv.loca.lt','https://*.127.0.0.1','https://*.brave-rules-think-200-113-253-39.loca.lt','https://*.web-production-3c8c.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['http://*.ajedpv.loca.lt','https://*.ajedpv.loca.lt','https://*.127.0.0.1','https://*.brave-rules-think-200-113-253-39.loca.lt','https://*.ajedpv.up.railway.app']
 
 # STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 

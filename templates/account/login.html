@@ -40,7 +40,7 @@
                                     <form action="{% url 'account_login' %}" method="POST">
                                         {% csrf_token %}
                                     <div class="text-center mb-3">
-                                        <a href="index.html"><<h1 class="logo-abbr" width="53" height="53" viewbox="0 0 53 53">@</h1>
+                                        <a href="{% url 'home' %}"><<h1 class="logo-abbr" width="53" height="53" viewbox="0 0 53 53">@</h1>
                                             <h2 class="brand-title" width="124px" height="33px">AJEDPV</h2></a>
                                     </div>
                                     <h4 class="text-center mb-4">Conectez vous a votre compte</h4>

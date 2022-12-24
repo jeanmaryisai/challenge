@@ -167,7 +167,7 @@ STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CSRF_TRUSTED_ORIGINS = ['http://*.ajedpv.loca.lt','https://*.ajedpv.loca.lt','https://*.127.0.0.1','https://*.brave-rules-think-200-113-253-39.loca.lt','https://*.ajedpv.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['http://*.ajedpv.loca.lt','https://*.ajedpv.loca.lt','https://*.127.0.0.1','https://*.ajedpv.up.railway.app']
 
 # STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 

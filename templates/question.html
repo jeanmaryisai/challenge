@@ -13,8 +13,8 @@
     <div class="card">
         <div class="card-header border-0 pb-0">
             <div>
-                <h4 class="card-title mb-2">Nouvel question</h4>
-                <span class="fs-12">La question sera pour {{concurent.prenom}}. Bonne chance a toi!  ;)</span>
+                <h4 class="card-title mb-2">Nouvelle question</h4>
+                <span class="fs-12">La question sera pour {{concurent.prenom}}. Bonne chance &agrave; vous!  ;)</span>
             </div>
         </div>
         <div class="card-body">
@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div id="info">
-                <h4 class="mt-3 mb-0">Entrer le numero de question:</h4>
+                <h4 class="mt-3 mb-0">Entrez le num&eacute;ro de question:</h4>
                 <div class="format-slider">
                     <div class="row">
                         <span class="fs-30 col-md-2">#</span>
@@ -85,7 +85,7 @@
                     <div class="card">
                         <div class="card-header d-block">
                             <h4 class="card-title">Question pour {{concurent.prenom}}</h4>
-                            <p class="m-0 subtitle">Pour la question vous disposee en tout de <code>30 seconds</code> bonne <code> chance</code></p>
+                            <p class="m-0 subtitle">Pour la question, vous disposez en tout de <code>30 secondes</code> bonne <code> chance</code></p>
                         </div>
                         <div class="card-body">
 
@@ -122,10 +122,10 @@
                 </div>
             </div>
             <div class="col-xxl-12 m-3 m-t-0" id="replique" style="display: none;">
-                <h4>Repliques</h4>
+                <h4>R&eacute;pliques</h4>
                 <select id="replique_select" class="bootstrap-select form-control amount-input m-1" style="border:1px dotted gray ;max-width:600px;font-size:medium;">
                 
-                <option value="">Selectionner le concurent</option>
+                <option value="">S&eacute;lectionner le concurent</option>
                 {% for x in concurents %}
                     <option value="{{x.nom}}">{{x.nom}} {{x.prenom}}</option>
     

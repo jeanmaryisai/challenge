@@ -7,7 +7,7 @@
                         text-shadow: 0px 2px 3px rgba(255,255,255,0.5);
                         -webkit-background-clip: text;
                            -moz-background-clip: text;
-                                background-clip: text;font-weight: 900;"> Mes envellopes
+                                background-clip: text;font-weight: 900;"> Mes enveloppes
                 </h1>
                 <br><br>
 {% for x in cadeaux %}
@@ -20,17 +20,17 @@
 							</div>
                             <div class="card-body">
 								<div class="row text-center">
-									<h5> Vinn pran kado paw la </h5>
+									<h5> Vin pran kado paw la </h5>
 									<div class="col-6">
 										<div class="bgl-primary rounded p-3">
 											<h4 class="mb-0">Joyeux</h4>
-											<small>Noel</small>
+											<small>No&euml;l</small>
 										</div>
 									</div>
 									<div class="col-6">
 										<div class="bgl-primary rounded p-3">
 											<h4 class="mb-0">Bon</h4>
-											<small>Nwel</small>
+											<small>Nw&egrave;l</small>
 										</div>
 									</div>
 								</div>
@@ -38,10 +38,10 @@
 							<div class="card-footer mt-0">	
 							{% if not x.is_redeem %}							
 								<a href="{% url 'redeem' x.id %}" 
-								class="btn btn-primary btn-lg btn-block">R&eacute;clamer le cadeau</a>	
+								class="btn btn-primary btn-lg btn-block">R&eacute;clamez le cadeau</a>	
 							{% else %}
 								<a
-								class="btn btn-secondary btn-lg btn-block">Cadeau d&eacute;ja recu</a>	
+								class="btn btn-secondary btn-lg btn-block">Cadeau d&eacute;j&agrave; re	&ccedil;u</a>	
 							{% endif %}	
                             </div>
                         </div>
@@ -54,8 +54,8 @@
 														<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
 														<line x1="3" y1="6" x2="21" y2="6"></line>
 														<path d="M16 10a4 4 0 0 1-8 0"></path>
-													<h4 class="my-2">Desol&eacute; vous n'avez pas encore de cadeaux. Aller en gagner.</h4>
-													<a href="{% url 'home' %}" class="btn my-2 btn-primary btn-lg px-4"><i class="fa fa-usd"></i> Retourner a l'aceuil</a>
+													<h4 class="my-2">Desol&eacute; vous n'avez pas encore de cadeaux. Allez-en gagner.</h4>
+													<a href="{% url 'home' %}" class="btn my-2 btn-primary btn-lg px-4"><i class="fa fa-usd"></i> Retournez &agrave; l'aceuil</a>
 												</div>
 
 {% endfor %}

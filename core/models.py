@@ -4,6 +4,12 @@ from django.shortcuts import reverse
 import random
 from django.conf import settings
 
+def gap():
+    # try:
+        qq=CustomEvent.objects.get(isActive=True)
+        return qq
+    # except:
+    #     return 0
 # Create your models here.
 
 CHOICES_LABEL=(
@@ -23,13 +29,54 @@ CHOICES_PROG=(
     (6,'Piece de Theatre')
 )
 
-class Concurent(models.Model):
+class CustomEvent(models.Model):
+    titre= models.CharField(max_length=50)
+    date= models.DateTimeField()
+    location=models.CharField(max_length=300)
+    is_concour=models.BooleanField(default=True)
+    isActive=models.BooleanField()
+
+    def __str__(self) -> str:
+        return f"{self.titre} -{self.date}"
+
+    def save(self, *args, **kwargs):
+        
+        if self.isActive:
+            for x in CustomEvent.objects.all():
+                x.isActive=False
+                x.save()
+            self.isActive=True
+
+        super(CustomEvent, self).save(*args, **kwargs)    
+
+class Member(models.Model):
     nom=models.CharField(max_length=50,unique=True)
     prenom=models.CharField(max_length=50,unique=True)
     age=models.IntegerField()
+    profile=models.ImageField(null=True)
+
+    def __str__(self) -> str:
+        return f"{self.nom} {self.prenom}"
+    
+
+class Concurent(models.Model):
+    nom=models.CharField(max_length=50)
     pointCum=models.DecimalField(max_digits=9000,decimal_places=2,default=0)
     id_fake=models.CharField(max_length=50,default='2389A1')
+    isTeam=models.BooleanField(default=False)
+    coach=models.ForeignKey(Member, on_delete=models.SET_NULL,null=True,blank=True, related_name='coach')
+    event= models.ForeignKey(CustomEvent,on_delete=models.SET_NULL,null=True,blank=True)
+    members=models.ManyToManyField(Member)
     profile=models.ImageField(null=True)
+
+
+    @property
+    def isTeam(self):
+        if self.members.count()>1:
+            return True
+        else:
+            return False
+
 
     def get_vote_url(self):
         return reverse('vote', kwargs={
@@ -41,16 +88,17 @@ class Concurent(models.Model):
     @property
     def get_manches(self):
         con=[]
-        for x in Manche.objects.all().order_by('numero'):
+        for x in Manche.objects.filter(event=gap()).order_by('numero'):
             item=x.concurent.get(concurent=self)
             con.append(item)
+        print(f'test 2390 {len(con)}')
         return con
 
     @property
     def position_manche(self):
         con=[]
         
-        for x in Manche.objects.all().order_by('numero'):
+        for x in Manche.objects.filter(event=gap()).order_by('numero'):
             i=1
             for y in x.get_concurent_in_order:
                 if y.concurent==self:
@@ -74,7 +122,7 @@ class Concurent(models.Model):
     @property
     def get_repliques(self):
         con=[]
-        for x in Question.objects.all():
+        for x in Question.objects.filter(event=gap()):
             if self in x.repliques.all():
                 con.append(x)
         return con
@@ -82,27 +130,34 @@ class Concurent(models.Model):
     @property
     def get_repliques_ratees(self):
         con=[]
-        for x in Question.objects.all():
+        for x in Question.objects.filter(event=gap()):
             if self in x.repliques_rate.all():
                 con.append(x)
         return con
 
-
+    @property
+    def vraiNom(self):
+        if self.isTeam:
+            return self.nom
+        else:
+            return self.members.all().first.__str__
 
     def __str__(self) -> str:
-        return self.prenom
+        return self.vraiNom
     
+
 
 class Concurent_par_manche(models.Model):
     concurent= models.ForeignKey(Concurent, on_delete=models.CASCADE)
     pointsCum= models.IntegerField(default=0)
 
     def __str__(self) -> str:
-        return f"{self.concurent.prenom} - {self.pointsCum}"    
+        return f"{self.concurent.vraiNom} - {self.pointsCum}"    
 
 class Manche(models.Model):
     numero=models.IntegerField()
     isopen=models.BooleanField(default=True)
+    event= models.ForeignKey(CustomEvent,on_delete=models.SET_NULL,null=True,blank=True)
     concurent=models.ManyToManyField(Concurent_par_manche)
 
     @property
@@ -119,7 +174,7 @@ class Manche(models.Model):
         for x in self.concurent.all():
             if x.pointsCum > max:
                 max=x.pointsCum
-                concurent_max= x.concurent.prenom
+                concurent_max= x.concurent.vraiNom
         return concurent_max
 
     def get_champion_points(self):
@@ -143,6 +198,7 @@ class Dedicace(models.Model):
     like_counter=models.IntegerField(default=0,editable=False)
     replique_a=models.ForeignKey("self",on_delete=models.SET_NULL,null=True,blank=True)
     show=models.BooleanField(default=False)
+    event= models.ForeignKey(CustomEvent,on_delete=models.SET_NULL,null=True,blank=True)
     
     @property
     def get_nombre_likes(self):
@@ -166,6 +222,7 @@ class Notification(models.Model):
     message=models.TextField()
     date=models.DateTimeField(auto_now_add=True)
     level=models.CharField(max_length=1,choices=CHOICES_LABEL)
+    event= models.ForeignKey(CustomEvent,on_delete=models.SET_NULL,null=True,blank=True)
     def __str__(self):
         return self.message[:25]
 
@@ -176,6 +233,7 @@ class Programme(models.Model):
     rank=models.IntegerField()
     passe=models.BooleanField(default=False)
     type=models.IntegerField(choices=CHOICES_PROG)
+    event= models.ForeignKey(CustomEvent,on_delete=models.SET_NULL,null=True,blank=True)
 
     def __str__(self) -> str:
         return f'{self.titre} par {self.intervenant}'
@@ -193,6 +251,7 @@ class Question(models.Model):
     time_answer=models.DateTimeField(null=True,blank=True)
     is_unique=models.BooleanField(default=False)
     is_repliques=models.BooleanField(default=True)
+    event= models.ForeignKey(CustomEvent,on_delete=models.SET_NULL,null=True,blank=True)
 
 
     def dump(self):
@@ -242,10 +301,11 @@ class cadeau(models.Model):
     nombre_disponible=models.IntegerField()
     cadeau=models.TextField()
     show=models.BooleanField(default=False)
+    event= models.ForeignKey(CustomEvent,on_delete=models.SET_NULL,null=True,blank=True)
 
     @property
     def winners(self):
-        return order.object.filter(cadeau=self)
+        return order.objects.filter(cadeau=self)
     @property
     def is_open(self):
         if order.objects.filter(cadeau=self).count() < self.nombre_disponible:
@@ -259,11 +319,11 @@ class cadeau(models.Model):
 
     def save(self, *args, **kwargs):
         if self.show:
-            for x in cadeau.objects.all():
+            for x in cadeau.objects.filter(event=gap()):
                 x.show=False
                 x.save()
             self.show=True        
-        super(Item, self).save(*args, **kwargs)
+        super(cadeau, self).save(*args, **kwargs)
     
 
 class cadeau_quesion(models.Model):
@@ -273,7 +333,8 @@ class cadeau_quesion(models.Model):
     reponse_fake_1=models.TextField()
     reponse_fake_2=models.TextField()
     reponse_fake_3=models.TextField()
-
+    event= models.ForeignKey(CustomEvent,on_delete=models.SET_NULL,null=True,blank=True)
+    
     def __str__(self):
         return self.libelle[:25]
 

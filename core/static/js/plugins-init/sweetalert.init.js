@@ -71,7 +71,8 @@ document.querySelector(".sweet-wrong").onclick = function() {
                     document.getElementById('confirms').style.display = 'none'
                 }
                 if (data == 400) {
-                    location.reload()
+                    swal("Bonne reponse pour !!", "Nope il y a une erreur " + concurent_nom + " !!", "success")
+                    // location.reload()
                 }
             })
 

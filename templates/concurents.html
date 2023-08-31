@@ -19,7 +19,7 @@
                                 <div class="profile-image">
                                     <!-- <img src="{{concurent.concurent.profile.url}}" alt="" style="object-fit:cover ;">  -->
                                                     <div class="media me-2 media-info">
-                                                        {{ concurent.concurent.prenom|slice:":2" }}
+                                                        {{ concurent.concurent.vraiNom|slice:":2" }}
                                                     </div>
                                     {% if forloop.counter == 1 %}
                                     <span class="bg-success">
@@ -101,7 +101,7 @@
                                             d="M12 8C12.5523 8 13 7.55228 13 7C13 6.44771 12.5523 6 12 6C11.4477 6 11 6.44771 11 7C11 7.55228 11.4477 8 12 8Z"
                                             fill="#fff"></path>
                                     </svg>
-                                        <p class="mb-0 fs-14">Clickez pour voir le joueur en details </p>
+                                        <p class="mb-0 fs-14">Clickez pour voir en details </p>
                                     </div>
                                 </a>
                             </div>

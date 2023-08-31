@@ -20,7 +20,7 @@
                     </div>
                     <div class="profile-details">
                         <div class="profile-name px-3 pt-2">
-                            <h4 class="text-primary mb-0">{{concurent.nom}} {{concurent.prenom}}</h4>
+                            <h4 class="text-primary mb-0">{{concurent.vraiNom}}</h4>
                             <p>{{concurent.pointCum}} points au total</p>
                         </div>
                         <div class="profile-email px-2 pt-2">
@@ -130,7 +130,7 @@
                                 <h3 class="m-b-5">{{concurent.pointCum}}</h3><span>points</span>
                             </div>
                             <div class="col m-3">
-                                <h3 class="m-b-0">{{concurent.prenom}} {{concurent.nom}}</h3><span>Nom complet</span>
+                                <h3 class="m-b-0">{{concurent.vraiNom}}</h3><span>Nom complet</span>
                             </div>
                         </div>
                         <div class="mt-4">
@@ -179,7 +179,7 @@
                                                 <div class="mb-3">
                                                     <label class="text-black font-w600 form-label">Nom de la personne<span
                                                             class="required">*</span></label>
-                                                    <input type="text" class="form-control" name="destinataire" value="{{concurent.prenom}}">
+                                                    <input type="text" class="form-control" name="destinataire" value="{{concurent.vraiNom}}">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -218,7 +218,7 @@
         <div class="row  mt-xl-0 mt-4">
             <div class="col-md-6">
                 <h4 class="card-title">Sommaires des questions</h4>
-                <span>Voyons les statistiques de {{concurent.prenom}}</span>
+                <span>Voyons les statistiques de {{concurent.vraiNom}}</span>
                 <ul class="card-list mt-4">
                     <li><span class="bg-blue circle" id='nqrp' data-nombre={{concurent.get_questions_repondues|length}}></span>Questions r&eacute;pondues<span>{{concurent.get_questions_repondues|length}}</span></li>
                     <li><span class="bg-success circle" id='nrrp' data-nombre={{concurent.get_repliques|length}}></span>R&eacute;pliques<span>{{concurent.get_repliques|length}}</span></li>
@@ -256,7 +256,96 @@
     {% endfor %}
 </ul>
 
+{% if concurent.isTeam %}
 
+<div class="card">
+    <div class="card-header d-block d-sm-flex border-0">
+        <div class="me-3">
+            <h4 class="card-title mb-2">Les membre de l'equipe </h4>
+            <span class="fs-12">Voici la liste des membre de l'equipe {{ concurent.vraiNom }}</span>
+        </div>
+    </div>
+    <div class="card-body tab-content p-0">
+        <div class="tab-pane fade active show" id="monthly" role="tabpanel">
+            <div id="accordion-one" class="accordion style-1">
+
+                <div class="accordion-item">
+                    <div class="accordion-header collapsed" data-bs-toggle="collapse" data-bs-target="#default_collapseOne{{forloop.counter}}">
+                        <div class="d-flex align-items-center">
+                            <div class="profile-image">
+                                <!-- <img src="{{concurent.coach.profile.url}}" alt="" style="object-fit:cover ;">  -->
+                                                <div class="media me-2 media-info">
+                                                    {{ concurent.coach.prenom|slice:":2" }}
+                                                </div>
+                            
+                                                <span class="bg-success">
+                                                    <svg style="color:#fff ;" class="svg-snoweb svg-theme-light" height="30"
+                                                        preserveaspectratio="xMidYMid meet" viewbox="0 0 100 100" width="30" x="0"
+                                                        xmlns="http://www.w3.org/2000/svg" y="0">
+                                                        <path class="svg-fill-primary"
+                                                            d="M78.28,14.35a2.72,2.72,0,0,0-1.75-.63h-12a2.72,2.72,0,0,0-1.56.49L50.59,22.77a2.75,2.75,0,0,1-3.07.05L34.27,14.17a2.77,2.77,0,0,0-1.5-.45H23.05a2.75,2.75,0,0,0-2.22,4.36L32.71,34.39a2.73,2.73,0,0,0,3.4.86c4.2-2,14.52-5.8,25.65,0a2.75,2.75,0,0,0,3.4-.67L78.64,18.21A2.73,2.73,0,0,0,78.28,14.35Z M49.07,37.82A24.23,24.23,0,1,0,73.29,62.06h0A24.23,24.23,0,0,0,49.07,37.82Zm7.11,35.77-7-5-7,5,2.66-8.17-7-5.06h8.59l2.66-8.17,2.66,8.17h8.59l-6.95,5.06Z"
+                                                            fill="#fff">
+                                                        </path>
+                                                    </svg>
+                                                </span> 
+                            </div>
+                            <div class="user-info">
+                                <h6 class="fs-16 font-w700 mb-0"><a href="javascript:void(0)">{{concurent.coach.prenom}} {{concurent.coach.nom}} </a></h6>
+
+                            </div>
+                        </div>
+                        
+                        <a class="btn btn-info light" href="javascript:void(0);">Coach</a>
+                    </div>
+                   
+                </div>
+
+                {% for concurentt in concurent.members.all %}
+                <div class="accordion-item">
+                    <div class="accordion-header collapsed" data-bs-toggle="collapse" data-bs-target="#default_collapseOne{{forloop.counter}}">
+                        <div class="d-flex align-items-center">
+                            <div class="profile-image">
+                                <!-- <img src="{{concurentt.profile.url}}" alt="" style="object-fit:cover ;">  -->
+                                                <div class="media me-2 media-info">
+                                                    {{ concurentt.prenom|slice:":2" }}
+                                                </div>
+                            
+                                <span class="bg-info">
+                                    <svg width="16" height="16" viewbox="0 0 16 16" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip3)">
+                                            <path
+                                                d="M10.4125 14.85C10.225 14.4625 10.3906 13.9937 10.7781 13.8062C11.8563 13.2875 12.7688 12.4812 13.4188 11.4719C14.0844 10.4375 14.4375 9.23749 14.4375 7.99999C14.4375 4.44999 11.55 1.56249 8 1.56249C4.45 1.56249 1.5625 4.44999 1.5625 7.99999C1.5625 9.23749 1.91562 10.4375 2.57812 11.475C3.225 12.4844 4.14062 13.2906 5.21875 13.8094C5.60625 13.9969 5.77187 14.4625 5.58437 14.8531C5.39687 15.2406 4.93125 15.4062 4.54062 15.2187C3.2 14.575 2.06562 13.575 1.2625 12.3187C0.4375 11.0312 -4.16897e-07 9.53749 -3.49691e-07 7.99999C-2.56258e-07 5.86249 0.83125 3.85312 2.34375 2.34374C3.85313 0.831242 5.8625 -7.37314e-06 8 -7.2797e-06C10.1375 -7.18627e-06 12.1469 0.831243 13.6563 2.34374C15.1688 3.85624 16 5.86249 16 7.99999C16 9.53749 15.5625 11.0312 14.7344 12.3187C13.9281 13.5719 12.7938 14.575 11.4563 15.2187C11.0656 15.4031 10.6 15.2406 10.4125 14.85Z"
+                                                fill="white"></path>
+                                            <path
+                                                d="M11.0407 8.41563C11.1938 8.56876 11.2688 8.76876 11.2688 8.96876C11.2688 9.16876 11.1938 9.36876 11.0407 9.52188L9.07503 11.4875C8.78753 11.775 8.40628 11.9313 8.00315 11.9313C7.60003 11.9313 7.21565 11.7719 6.93127 11.4875L4.96565 9.52188C4.6594 9.21563 4.6594 8.72188 4.96565 8.41563C5.2719 8.10938 5.76565 8.10938 6.0719 8.41563L7.22502 9.56876L7.22502 5.12814C7.22502 4.69689 7.57503 4.34689 8.00628 4.34689C8.43753 4.34689 8.78753 4.69689 8.78753 5.12814L8.78753 9.57188L9.94065 8.41876C10.2407 8.11251 10.7344 8.11251 11.0407 8.41563Z"
+                                                fill="white"></path>
+                                        </g>
+                                        <defs>
+                                            <clippath id="clip3">
+                                                <rect width="16" height="16" fill="white"
+                                                    transform="matrix(-4.37114e-08 1 1 4.37114e-08 0 -7.62939e-06)">
+                                                </rect>
+                                            </clippath>
+                                        </defs>
+                                    </svg>
+                                </span> 
+                            </div>
+                            <div class="user-info">
+                                <h6 class="fs-16 font-w700 mb-0"><a href="javascript:void(0)">{{concurentt.prenom}} {{concurentt.nom}} </a></h6>
+
+                            </div>
+                        </div>
+                        <a class="btn btn-info light" href="javascript:void(0);">Membre</a>
+                    </div>
+
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 
 <div class="col-xxl-12">
     <div class="card transparent-card">

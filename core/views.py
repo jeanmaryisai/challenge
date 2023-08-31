@@ -1,5 +1,6 @@
 
 from decimal import Decimal
+# from .utils import gap
 from django.shortcuts import redirect, render
 from .models import *
 from django.contrib import messages
@@ -9,6 +10,12 @@ from django.http import JsonResponse
 from datetime import datetime
 from django.contrib.admin.views.decorators import staff_member_required
 
+def gap():
+    # try:
+        qq=CustomEvent.objects.get(isActive=True)
+        return qq
+    # except:
+    #     return 0
 
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -25,13 +32,14 @@ def home(request):
         user_Fake.ip=get_client_ip(request)
         user_Fake.save()
 
-    manches=Manche.objects.all().order_by('numero')
+    manches=Manche.objects.filter(event=gap()).order_by('numero')
 
-    a=Question.objects.exclude(receveur__isnull=True).count()
-    b=Question.objects.filter(repondu=True).count()
-    c=Question.objects.filter(repondu=False).exclude(receveur__isnull=True).exclude(repliques__isnull=True).count()
+    a=Question.objects.filter(event=gap()).exclude(receveur__isnull=True).count()
+    b=Question.objects.filter(event=gap()).filter(repondu=True).count()
+    c=Question.objects.filter(event=gap()).filter(repondu=False).exclude(receveur__isnull=True).exclude(repliques__isnull=True).count()
     d=a-b-c
     p=Programme.objects.filter(passe=False).order_by('rank')
+    print(f"test 1 {gap().titre}")
     pp_first=p.first()
     pp_last=p.last()
     p_percent=int((pp_first.rank/pp_last.rank) * 100) 
@@ -48,28 +56,31 @@ def home(request):
     context={
         'programmes':p,
         'manches':manches,
-        'manche_active':Manche.objects.filter(isopen=True).order_by('numero').first,
-        'previous_manche':Manche.objects.filter(isopen=False).order_by('numero').last,
-        'notification':Notification.objects.all().order_by('-date')[:10],
+        'manche_active':Manche.objects.filter(event=gap()).filter(isopen=True).order_by('numero').first,
+        'previous_manche':Manche.objects.filter(event=gap()).filter(isopen=False).order_by('numero').last,
+        'notification':Notification.objects.filter(event=gap()).order_by('-date')[:10],
         'questions_ans':xxx,
         'questions_replique':xx,
         'questions_missed':xxy,
         'p_percent':p_percent,
-        'concurents':Concurent.objects.all(),
+        'concurents':Concurent.objects.filter(event=gap()),
         'user':fake_user,
+        'event':gap()
     }
     return render(request,'index.html',context)
 
 def concurent(request,slug):
-    manche=Manche.objects.filter(isopen=True).order_by('numero').first()
+    manche=Manche.objects.filter(isopen=True,event=gap()).order_by('numero').first()
     if(slug=='all'):
         context={
             'manche':manche,
         }
         return render(request,'concurents.html',context)
     else:
-        try:
+        # try:
+            
             concurent= Concurent.objects.get(nom=slug)
+
             numero=manche.numero
             x=concurent.position_manche[numero-1]
             y=concurent.position_manche[numero-2]
@@ -106,8 +117,9 @@ def concurent(request,slug):
             except:
                 pass
             return render(request,'concurent.html',context)
-        except:
-            return redirect('home')
+        # except Exception as e:
+        #     print(f'the message is {e}')
+        #     return redirect('home')
         
 @staff_member_required
 def question(request,slug):
@@ -141,13 +153,13 @@ def notifications(request):
     return render(request,'notifications.html',{'notifs':Notification.objects.order_by('-date')})
 
 def programme(request):
-    p=Programme.objects.filter(passe=False).order_by('rank').first()
+    p=Programme.objects.filter(event=gap()).filter(passe=False).order_by('rank').first()
     try:
-        next=Programme.objects.filter(passe=False).order_by('rank')[1]
+        next=Programme.objects.filter(event=gap()).filter(passe=False).order_by('rank')[1]
     except:
         next=None
     context={
-        'progs':Programme.objects.all(),
+        'progs':Programme.objects.filter(event=gap()),
         'present':p,
         'next':next,
     }
@@ -165,7 +177,7 @@ def dedicace(request):
             responsible=concurent
         except:
             pass
-        yy=Dedicace.objects.create(emetteur=destinateur,recepteur=destinataire,message=msj,show=True)
+        yy=Dedicace.objects.create(emetteur=destinateur,recepteur=destinataire,message=msj,show=True,event=gap())
         try:
             id_reponse=request.POST['replique']
             yy.replique_a=Dedicace.objects.get(id=id_reponse)
@@ -174,9 +186,9 @@ def dedicace(request):
             pass
 
         try:
-            x=Notification.objects.create(message=f'{destinateur} a fait une dedicace a {destinataire}',responsible=responsible,level='i')
+            x=Notification.objects.create(event=gap(),message=f'{destinateur} a fait une dedicace a {destinataire}',responsible=responsible,level='i')
         except:
-            x=Notification.objects.create(message=f'{destinateur} a fait une dedicace a {destinataire}',level='i')
+            x=Notification.objects.create(event=gap(),message=f'{destinateur} a fait une dedicace a {destinataire}',level='i')
         messages.success(request,'Votre dedicace a ete publie avec succes')
         return redirect('dedicaces')
     else:
@@ -225,7 +237,7 @@ def get_question(request,slug):
     if request.method=='POST':
         # try:
             num=int(slug)
-            question= Question.objects.get(number=num)
+            question= Question.objects.filter(event=gap()).get(number=num)
             if question.used==True:
                 messages.warning(request,'La question a deja ete utilsee')
                 return JsonResponse(404,safe=False)
@@ -244,9 +256,9 @@ def reponse(request):
     else:
         data=json.loads(request.body)
         reponse=data['reponse']
-        question=Question.objects.get(number=data['question'])
-        concurent=Concurent.objects.get(nom=data['concurent'])
-        manche=Manche.objects.filter(isopen=True).order_by('numero').first()
+        question=Question.objects.filter(event=gap()).get(number=data['question'])
+        concurent=Concurent.objects.filter(event=gap()).get(nom=data['concurent'])
+        manche=Manche.objects.filter(event=gap()).filter(isopen=True).order_by('numero').first()
         
         
         points=0
@@ -276,12 +288,12 @@ def reponse(request):
                 question.repliques_rate.add(concurent)
                 question.save()
 
-                Notification.objects.create(responsible=concurent,message=f'A {mss} question #{question.number}',level=lvl)
+                Notification.objects.create(event=gap,responsible=concurent,message=f'A {mss} question #{question.number}',level=lvl)
                 
                 concurent.pointCum =points +concurent.pointCum
                 concurent.save()
 
-                for x in manche.concurent.all():
+                for x in manche.concurent.filter(event=gap()):
                     if x.concurent == concurent:    
                         x.pointsCum = points+x.pointsCum 
                         x.save()
@@ -319,7 +331,7 @@ def reponse(request):
                 x.save()
         
 
-        Notification.objects.create(responsible=concurent,message=f'A {mss} la question #{question.number}',level=lvl)
+        Notification.objects.create(event=gap(),responsible=concurent,message=f'A {mss} la question #{question.number}',level=lvl)
                 
         Logs.objects.create(concurent=concurent,question=question,pointsCum=concurent.pointCum,manche=manche.numero)
 
@@ -350,21 +362,21 @@ def like(request,slug):
         if ip is None:
             messages.error(request,'nous avons du mal a traiter votre vote, si vous utiliser le mode incognito ou un vpn, enlever les et reesayer.')
             return redirect('home')
-        user,created=fake_user.objects.get_or_create(user=request.user)
-        if dedicace in user.dedicaces.all():
+        user,created=fake_user.objects.get_or_create(user=request.user,event=gap)
+        if dedicace in user.dedicaces.filter(event=gap()):
             user.dedicaces.remove(dedicace)
             user.save()
             messages.warning(request,'Vous retirer le like de cette dedicace')
             return redirect('dedicaces')
         user.dedicaces.add(dedicace)
-        Notification.objects.create(message=f'{user.user.username} a liker la dedicace de {dedicace.emetteur} a {dedicace.recepteur}',level='i')
+        Notification.objects.create(event=gap(),message=f'{user.user.username} a liker la dedicace de {dedicace.emetteur} a {dedicace.recepteur}',level='i')
         messages.info(request,'vous avez liker avec success')
         return redirect('dedicaces')
 
 
 @staff_member_required
 def next_prog(request):
-    p=Programme.objects.filter(passe=False).order_by('rank').first()
+    p=Programme.objects.filter(event=gap()).filter(passe=False).order_by('rank').first()
     p.passe=True
     p.save()
     return redirect('programme')
@@ -372,11 +384,11 @@ def next_prog(request):
 @login_required
 def Cadeau(request):
     try:
-        c=cadeau.objects.get(show=True)
+        c=cadeau.objects.filter(event=gap()).get(show=True)
     except:
         return render(request,'empty_cadeau.html')
 
-    questions=cadeau_quesion.objects.filter(cadeau=c)
+    questions=cadeau_quesion.objects.filter(event=gap()).filter(cadeau=c)
     if request.method == 'POST':
         user,created=fake_user.objects.get_or_create(user=request.user)
 
@@ -393,7 +405,7 @@ def Cadeau(request):
         if not c.is_open:
             return render(request,'manque.html',{'number':error,'msj':"Vous n'avez pas ete assez rapide. Une prochaine fois"})
         
-        orw,created=order.objects.get_or_create(cadeau=c,user=user)
+        orw,created=order.objects.get_or_create(event=gap(),cadeau=c,user=user)
         Notification.objects.create(message=f'{user.user.username} a recu un cadeau',level='s')
         return render(request,'gain.html',{'cadeau':c})
 
@@ -407,14 +419,14 @@ def Cadeau(request):
 @login_required
 def envellope(request):
     user=fake_user.objects.get(user=request.user)
-    od= order.objects.filter(user=user)
+    od= order.objects.filter(event=gap(),user=user)
     return render(request,'enveloppe.html',{'cadeaux':od})
 
 @login_required
 def redeem(request,slug):
     user=fake_user.objects.get(user=request.user)
     try:
-        od=order.objects.get(user=user,id=slug)
+        od=order.objects.get(event=gap(),user=user,id=slug)
     except:
         messages.warning(request,"Un erreur s'est produite")
         return redirect('home')

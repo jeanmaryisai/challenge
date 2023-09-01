@@ -21,7 +21,7 @@
                     <div class="profile-details">
                         <div class="profile-name px-3 pt-2">
                             <h4 class="text-primary mb-0">{{concurent.vraiNom}}</h4>
-                            <p>{{concurent.pointCum}} points au total</p>
+                            <p>{{concurent.realPoints}} points au total</p>
                         </div>
                         <div class="profile-email px-2 pt-2">
                             <h4 class="text-muted mb-0">{{x}}</h4>
@@ -127,10 +127,19 @@
                                 <h3 class="m-b-5">#{{concurent.id_fake}}</h3><span>id</span>
                             </div>
                             <div class="col">
-                                <h3 class="m-b-5">{{concurent.pointCum}}</h3><span>points</span>
+                                <h3 class="m-b-5">{{concurent.pointCum}}</h3><span>Points des questions</span>
+                            </div>
+                            <div class="col">
+                                <h3 class="m-b-5">{{concurent.talent}}</h3><span>points talent</span>
+                            </div>
+                            <div class="col">
+                                <h3 class="m-b-5">{{concurent.slogan}}</h3><span>points Slogan</span>
+                            </div>
+                            <div class="col">
+                                <h3 class="m-b-5">+{{concurent.otherPoint}}</h3><span>Bonus</span>
                             </div>
                             <div class="col m-3">
-                                <h3 class="m-b-0">{{concurent.vraiNom}}</h3><span>Nom complet</span>
+                                <h3 class="m-b-0">{{concurent.realPoints}}</h3><span>Points total</span>
                             </div>
                         </div>
                         <div class="mt-4">
@@ -437,7 +446,7 @@
 </div>
 {% endblock %} {% block scripts %}
 
-
+<script src="{% static 'js/dashboard/dashboard-1.js' %}"></script>
 <script src="{% static 'vendor/apexchart/apexchart.js' %} "></script>
 
 <script src="{% static 'vendor/raphael/raphael.min.js' %} "></script>

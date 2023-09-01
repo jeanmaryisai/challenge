@@ -5,7 +5,7 @@
         <div class="card-header d-block d-sm-flex border-0">
             <div class="me-3">
                 <h4 class="card-title mb-2">Les concurents</h4>
-                <span class="fs-12">Les concurents sont affich&eacute;s en fonction de leurs points au cours de la derni&egrave;re manche en date.</span>
+                <span class="fs-12"></span>
             </div>
         </div>
         <div class="card-body tab-content p-0">
@@ -59,7 +59,7 @@
                                 </div>
                             </div>
                             <span>{{concurent.concurent.get_questions_repondues|length}} questions r&eacute;pondu</span>
-                            <span>{{concurent.pointsCum}} pts </span>
+                            <span>{{concurent.concurent.realPoints}} pts </span>
                             <span>{{concurent.concurent.get_nombre_votes}} Votes</span> {% if forloop.counter == 1 %}
                             <a class="btn btn-success light" href="javascript:void(0);">Leading</a> {% else %}
                             <a class="btn btn-info light" href="javascript:void(0);">following</a> {% endif %}

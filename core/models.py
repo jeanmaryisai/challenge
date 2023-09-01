@@ -35,6 +35,7 @@ class CustomEvent(models.Model):
     location=models.CharField(max_length=300)
     is_concour=models.BooleanField(default=True)
     isActive=models.BooleanField()
+    mc=models.CharField(max_length=50, default='Sara Casseus')
 
     def __str__(self) -> str:
         return f"{self.titre} -{self.date}"
@@ -68,7 +69,9 @@ class Concurent(models.Model):
     event= models.ForeignKey(CustomEvent,on_delete=models.SET_NULL,null=True,blank=True)
     members=models.ManyToManyField(Member)
     profile=models.ImageField(null=True)
-
+    talent=models.DecimalField(max_digits=99,decimal_places=2,default=0)
+    slogan=models.DecimalField(max_digits=99,decimal_places=2,default=0)
+    otherPoint=models.DecimalField(max_digits=99,decimal_places=2,default=0)
 
     @property
     def isTeam(self):
@@ -91,7 +94,6 @@ class Concurent(models.Model):
         for x in Manche.objects.filter(event=gap()).order_by('numero'):
             item=x.concurent.get(concurent=self)
             con.append(item)
-        print(f'test 2390 {len(con)}')
         return con
 
     @property
@@ -141,12 +143,15 @@ class Concurent(models.Model):
             return self.nom
         else:
             return self.members.all().first.__str__
+    
+    @property
+    def realPoints(self):
+        xx= self.pointCum + self.talent +self.slogan +self.otherPoint
+        return xx
 
     def __str__(self) -> str:
         return self.vraiNom
     
-
-
 class Concurent_par_manche(models.Model):
     concurent= models.ForeignKey(Concurent, on_delete=models.CASCADE)
     pointsCum= models.IntegerField(default=0)
@@ -163,7 +168,7 @@ class Manche(models.Model):
     @property
     def get_concurent_in_order(self):
         concurents=self.concurent.all()
-        con=sorted(concurents,key=lambda x:x.pointsCum,reverse=True)        
+        con=sorted(concurents,key=lambda x:x.concurent.realPoints,reverse=True)        
         return con
 
 
@@ -172,23 +177,21 @@ class Manche(models.Model):
         max=0
         concurent_max="presonne"
         for x in self.concurent.all():
-            if x.pointsCum > max:
-                max=x.pointsCum
+            if x.concurent.realPoints > max:
+                max=x.concurent.realPoints
                 concurent_max= x.concurent.vraiNom
         return concurent_max
 
     def get_champion_points(self):
         max=0
         for x in self.concurent.all():
-            if x.pointsCum > max:
-                max=x.pointsCum
+            if x.concurent.realPoints > max:
+                max=x.concurent.realPoints
         return max
 
 
     def __str__(self) -> str:
-        return f'manche #{self.numero}'
-    
-    
+        return f'manche #{self.numero}'   
 
 class Dedicace(models.Model):
     emetteur=models.CharField(max_length=100)
@@ -251,6 +254,8 @@ class Question(models.Model):
     time_answer=models.DateTimeField(null=True,blank=True)
     is_unique=models.BooleanField(default=False)
     is_repliques=models.BooleanField(default=True)
+    is_risk=models.BooleanField(default=False)
+    is_bonus=models.BooleanField(default=False)
     event= models.ForeignKey(CustomEvent,on_delete=models.SET_NULL,null=True,blank=True)
 
 
@@ -260,6 +265,7 @@ class Question(models.Model):
             'reponse':self.reponse,
             'number':self.number,
             'is_unique':self.is_unique,
+            'is_risk':self.is_risk,
             'is_repliques':self.is_repliques
         }
     def get_research_url(self):
@@ -348,6 +354,7 @@ class order(models.Model):
     cadeau=models.ForeignKey(cadeau,on_delete=models.CASCADE)
     user=models.ForeignKey(fake_user,on_delete=models.CASCADE)
     is_redeem=models.BooleanField(default=False)
+    event=models.ForeignKey(CustomEvent,on_delete=models.SET_NULL,null=True)
 
     def __str__(self):
         return f'{self.user}-{self.cadeau}'

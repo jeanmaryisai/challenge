@@ -143,7 +143,7 @@ function research(url) {
             } else {
                 const obj = JSON.parse(data)
                 document.getElementById('info').style.display = 'none'
-                document.getElementById('qst_number').innerHTML = 'Question #' + obj.number
+                document.getElementById('qst_number').innerHTML = 'Question #  ' + obj.number
                 document.getElementById('qst_body').innerHTML = obj.enoncee
                 document.getElementById('rpnse_body').innerHTML = obj.reponse
                 if (obj.is_unique == true)

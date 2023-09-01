@@ -275,12 +275,18 @@ def reponse(request):
                     messages.info(request,'Conflit de jugement veuillez gerer cette qst directement dans la section admin')
                     return JsonResponse(400,safe=False)
                 if reponse==3:
-                    points=Decimal(12.5) 
+                    points=Decimal(5) 
                     mss='repondu la replique a'
+                    if question.is_risk:
+                        mss='risque et a repondu la replique a'
+                        points=Decimal(12.5) 
                 elif reponse==4:
-                    points=Decimal(-12.5) 
+                    points=Decimal(-5) 
                     mss='rate la replique a'
                     lvl='d'
+                    if question.is_risk:
+                        mss='risque et rate la replique a'
+                        points=Decimal(12.5) 
                 messages.debug(request,'heoheo')
                 
                 
@@ -288,7 +294,7 @@ def reponse(request):
                 question.repliques_rate.add(concurent)
                 question.save()
 
-                Notification.objects.create(event=gap,responsible=concurent,message=f'A {mss} question #{question.number}',level=lvl)
+                Notification.objects.create(event=gap(),responsible=concurent,message=f'A {mss} question #{question.number}',level=lvl)
                 
                 concurent.pointCum =points +concurent.pointCum
                 concurent.save()
@@ -309,11 +315,17 @@ def reponse(request):
         
         if reponse==1:
             reponse=True
-            points=25
+            points=10
+            if question.is_risk:
+                points =25
+            if question.is_bonus:
+                points =15
         else:
             reponse=False
             mss='rate '
             lvl='d'
+            if question.is_risk:
+                points =-25
        
         question.manche=manche
         question.receveur=concurent
@@ -333,7 +345,7 @@ def reponse(request):
 
         Notification.objects.create(event=gap(),responsible=concurent,message=f'A {mss} la question #{question.number}',level=lvl)
                 
-        Logs.objects.create(concurent=concurent,question=question,pointsCum=concurent.pointCum,manche=manche.numero)
+        Logs.objects.create(concurent=concurent,question=question,pointsCum=concurent.realPoints,manche=manche.numero)
 
         return JsonResponse(200,safe=False)
 

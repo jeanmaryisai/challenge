@@ -30,7 +30,7 @@ function changeWholeTime(seconds) {
     }
 }
 for (var i = 0; i < setterBtns.length; i++) {
-    setterBtns[i].addEventListener("click", function(event) {
+    setterBtns[i].addEventListener("click", function (event) {
         var param = this.dataset.setter;
         switch (param) {
             case 'minutes-plus':
@@ -54,12 +54,12 @@ function timer(seconds) { //counts time, takes seconds
     let remainTime = Date.now() + (seconds * 1000);
     displayTimeLeft(seconds);
 
-    intervalTimer = setInterval(function() {
+    intervalTimer = setInterval(function () {
         timeLeft = Math.round((remainTime - Date.now()) / 1000);
         if (timeLeft < 0) {
             clearInterval(intervalTimer);
             isStarted = false;
-            setterBtns.forEach(function(btn) {
+            setterBtns.forEach(function (btn) {
                 btn.disabled = false;
                 btn.style.opacity = 1;
             });
@@ -79,7 +79,7 @@ function pauseTimer(event) {
         this.classList.remove('play');
         this.classList.add('pause');
 
-        setterBtns.forEach(function(btn) {
+        setterBtns.forEach(function (btn) {
             btn.disabled = true;
             btn.style.opacity = 0.5;
         });
@@ -127,13 +127,13 @@ function research(url) {
     let numero = document.getElementById('input-format').value
     let urll = url.slice(0, 14) + numero
     fetch(urll, {
-            method: 'POST',
-            headers: {
-                'CONTENT-Type': 'application/json',
-                'X-CSRFToken': csrftoken
-            },
-            body: JSON.stringify({ 'name': 'add' })
-        })
+        method: 'POST',
+        headers: {
+            'CONTENT-Type': 'application/json',
+            'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify({ 'name': 'add' })
+    })
         .then((response) => {
             return response.json()
         })
@@ -143,13 +143,20 @@ function research(url) {
             } else {
                 const obj = JSON.parse(data)
                 document.getElementById('info').style.display = 'none'
-                document.getElementById('qst_number').innerHTML = 'Question #' + obj.number
+                document.getElementById('qst_number').innerHTML = 'Question #  ' + obj.number
                 document.getElementById('qst_body').innerHTML = obj.enoncee
                 document.getElementById('rpnse_body').innerHTML = obj.reponse
-                if (obj.is_unique == true)
-                    {
-                        document.getElementById('accordion-two').classList.add('accordion-danger-solid')
-                    }
+                console.log("test:",obj)
+                if (obj.is_unique == true) {
+                    document.getElementById('accordion-two').classList.add('accordion-warning')
+                    document.getElementById('qst_number').innerHTML = 'Question #'+ obj.number+" | question a reponse unique"
+                    console.log("test:",obj.is_risk)
+                }
+                if (obj.is_risk == true) {
+                    console.log("question a risque")
+                    document.getElementById('accordion-two').classList.add('accordion-danger-solid')
+                    document.getElementById('qst_number').innerHTML = 'Question #' + obj.number+" | question a risque!"
+                }
                 document.getElementById('question').style.display = 'block'
                 numero_global = obj.number
             }

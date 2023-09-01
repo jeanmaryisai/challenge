@@ -132,12 +132,12 @@
         <div class="card">
             <div class="card-header flex-wrap border-0 pb-0 align-items-end">
                 <div class="mb-3 me-3">
-                    <h5 class="fs-20 text-black font-w500">Animatrice</h5>
-                    <span class="text-num text-black fs-36 font-w500">Sara Casseus</span>
+                    <h5 class="fs-20 text-black font-w500">Maitre de Ceremonie</h5>
+                    <span class="text-num text-black fs-36 font-w500">{{event.mc}}</span>
                 </div>
                 <div class="me-3 mb-3">
                     <p class="fs-14 mb-1">Date</p>
-                    <span class="text-black fs-16">08/21</span>
+                    <span class="text-black fs-16">{{event.date}}</span>
                 </div>
 
                 <div class="me-3 mb-3">
@@ -250,7 +250,8 @@
 
     <script src="{% static 'vendor/owl-carousel/owl.carousel.js' %}"></script>
     <script src="{% static 'js/dashboard/my-wallet.js' %}"></script>
-
+    <script src="{% static 'js/dashboard/dashboard-1.js' %}"></script>
+    <script src="{% static 'vendor/apexchart/apexchart.js' %}"></script>
 
     <script>
         function cardsCenter() {

@@ -62,7 +62,7 @@ class Member(models.Model):
 
 class Concurent(models.Model):
     nom=models.CharField(max_length=50)
-    pointCum=models.DecimalField(max_digits=9000,decimal_places=2,default=0)
+    pointCum=models.DecimalField(max_digits=90,decimal_places=2,default=0)
     id_fake=models.CharField(max_length=50,default='2389A1')
     isTeam=models.BooleanField(default=False)
     coach=models.ForeignKey(Member, on_delete=models.SET_NULL,null=True,blank=True, related_name='coach')

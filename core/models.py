@@ -149,8 +149,8 @@ class Concurent(models.Model):
         xx= self.pointCum + self.talent +self.slogan +self.otherPoint
         return xx
 
-    def __str__(self) -> str:
-        return self.vraiNom
+    # def __str__(self) -> str:
+    #     return self.vraiNom
     
 class Concurent_par_manche(models.Model):
     concurent= models.ForeignKey(Concurent, on_delete=models.CASCADE)

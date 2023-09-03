@@ -149,15 +149,15 @@ class Concurent(models.Model):
         xx= self.pointCum + self.talent +self.slogan +self.otherPoint
         return xx
 
-    # def __str__(self) -> str:
-    #     return self.vraiNom
+    def __str__(self) -> str:
+        return self.nom
     
 class Concurent_par_manche(models.Model):
     concurent= models.ForeignKey(Concurent, on_delete=models.CASCADE)
     pointsCum= models.IntegerField(default=0)
 
     def __str__(self) -> str:
-        return f"{self.concurent.vraiNom} - {self.pointsCum}"    
+        return f"{self.concurent.nom} - {self.pointsCum}"    
 
 class Manche(models.Model):
     numero=models.IntegerField()
@@ -179,7 +179,7 @@ class Manche(models.Model):
         for x in self.concurent.all():
             if x.concurent.realPoints > max:
                 max=x.concurent.realPoints
-                concurent_max= x.concurent.vraiNom
+                concurent_max= x.concurent.nom
         return concurent_max
 
     def get_champion_points(self):

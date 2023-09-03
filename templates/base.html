@@ -229,7 +229,7 @@
                         <ul aria-expanded="false">
                             <li><a href="{% url 'concurent' 'all' %}">Sommaire</a></li>
                             {% for x in concurents %}
-                            <li><a href="{% url 'concurent' x.nom %}"> {{x.vraiNom}} </a>
+                            <li><a href="{% url 'concurent' x.nom %}"> {{x.nom}} </a>
                             </li>
                             {% endfor %}
 

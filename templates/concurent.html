@@ -20,7 +20,7 @@
                     </div>
                     <div class="profile-details">
                         <div class="profile-name px-3 pt-2">
-                            <h4 class="text-primary mb-0">{{concurent.vraiNom}}</h4>
+                            <h4 class="text-primary mb-0">{{concurent.nom}}</h4>
                             <p>{{concurent.realPoints}} points au total</p>
                         </div>
                         <div class="profile-email px-2 pt-2">
@@ -188,7 +188,7 @@
                                                 <div class="mb-3">
                                                     <label class="text-black font-w600 form-label">Nom de la personne<span
                                                             class="required">*</span></label>
-                                                    <input type="text" class="form-control" name="destinataire" value="{{concurent.vraiNom}}">
+                                                    <input type="text" class="form-control" name="destinataire" value="{{concurent.nom}}">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -227,7 +227,7 @@
         <div class="row  mt-xl-0 mt-4">
             <div class="col-md-6">
                 <h4 class="card-title">Sommaires des questions</h4>
-                <span>Voyons les statistiques de {{concurent.vraiNom}}</span>
+                <span>Voyons les statistiques de {{concurent.nom}}</span>
                 <ul class="card-list mt-4">
                     <li><span class="bg-blue circle" id='nqrp' data-nombre={{concurent.get_questions_repondues|length}}></span>Questions r&eacute;pondues<span>{{concurent.get_questions_repondues|length}}</span></li>
                     <li><span class="bg-success circle" id='nrrp' data-nombre={{concurent.get_repliques|length}}></span>R&eacute;pliques<span>{{concurent.get_repliques|length}}</span></li>
@@ -271,7 +271,7 @@
     <div class="card-header d-block d-sm-flex border-0">
         <div class="me-3">
             <h4 class="card-title mb-2">Les membre de l'equipe </h4>
-            <span class="fs-12">Voici la liste des membre de l'equipe {{ concurent.vraiNom }}</span>
+            <span class="fs-12">Voici la liste des membre de l'equipe {{ concurent.nom }}</span>
         </div>
     </div>
     <div class="card-body tab-content p-0">

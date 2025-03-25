@@ -7,11 +7,11 @@ Welcome to the **Interactive Intellectual Competition Platform**, an open-source
 ## Screenshots
 
 
-![Home Page](screenshots/i1.jpg)
+![Home Page](i1.png)
 
-![Competitor Profile](screenshots/i2.jpg)
+![Competitor Profile](i2.png)
 
-![Voting System](screenshots/i3.jpg)
+![Voting System](i3.png)
 
 
 ## Features
